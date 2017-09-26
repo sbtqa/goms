@@ -7,6 +7,13 @@ import ru.sbtqa.tag.goms.objects.Token;
 
 public class Normalizer {
 
+    /**
+     * Normalize workflow.
+     * Apply rules to workflow
+     * 
+     * @param workflow workflow
+     * @return normalized worflow
+     */
     public static List<Token> normalize(List<Token> workflow) {
         List<Token> normalizedWorkflow = new ArrayList<>();
 

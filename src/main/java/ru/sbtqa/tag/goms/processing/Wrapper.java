@@ -8,6 +8,12 @@ import ru.sbtqa.tag.goms.objects.contexts.HandContext;
 
 public class Wrapper {
 
+    /**
+     * Apply prelims and self-context to token
+     * 
+     * @param token token
+     * @return wrapped token
+     */
     public static List<Token> wrap(Token token) {
         List<Token> wrappedToken = new ArrayList<>();
 
@@ -18,6 +24,12 @@ public class Wrapper {
         return wrappedToken;
     }
 
+    /**
+     * Insert prelims tokens before
+     * 
+     * @param token token
+     * @return workflow portion with prelims tokens
+     */
     private static List<Token> applyPrelims(Token token) {
         List<Token> workflowPortion = new ArrayList<>();
 
@@ -28,6 +40,12 @@ public class Wrapper {
         return workflowPortion;
     }
 
+    /**
+     * Insert H->M before token if it is self-contexted
+     * 
+     * @param token token
+     * @return workflow portion with H and M sequence
+     */
     private static List<Token> applySelfContext(Token token) {
         List<Token> workflowPortion = new ArrayList<>();
 
