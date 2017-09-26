@@ -4,56 +4,63 @@
       {  
         "name":"click",
         "symbol":"BB",
-        "description":"mouse button press",
-        "time":320,
+        "description":"Клик мышкой",
+        "time":200,
         "isMultipliable":false
       },
       {  
         "name":"button",
         "symbol":"K",
-        "description":"press button",
+        "description":"Нажатие клавиши",
         "time":280,
         "isMultipliable":false
       },
       {  
         "name":"handmove",
         "symbol":"H",
-        "description":"move hand between keyboard and mouse",
-        "time":320,
+        "description":"Перемещение руки",
+        "time":400,
         "isMultipliable":false
       },
       {  
         "name":"text",
         "symbol":"KK",
-        "description":"typing text in a text field",
+        "description":"Печать текста",
         "time":280,
         "isMultipliable":true
       },
       {  
         "name":"page",
         "symbol":"O",
-        "description":"page opening",
+        "description":"Открывается страница",
         "time":0,
         "isMultipliable":false
       },
       {  
         "name":"mental",
         "symbol":"M",
-        "description":"mentally preparing for executing physical actions",
-        "time":1250,
+        "description":"Ментальная подготовка",
+        "time":1200,
+        "isMultipliable":false
+      },
+      {  
+        "name":"focus",
+        "symbol":"F",
+        "description":"Фокус на элементе",
+        "time":0,
         "isMultipliable":false
       },
       {  
         "name":"pointing",
         "symbol":"P",
-        "description":"pointing to a target on a display with a mouse",
+        "description":"Указание мышкой",
         "time":1100,
         "isMultipliable":false
       },
       {  
         "name":"response",
         "symbol":"T",
-        "description":"wait for device response",
+        "description":"Ответ системы",
         "time":100,
         "isMultipliable":false
       },
