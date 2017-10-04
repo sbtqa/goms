@@ -1,5 +1,7 @@
 package ru.sbtqa.tag.goms.objects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,8 @@ public class Token {
         this(operator, DEFAULT_DESCRIPTION, multiplier, new ArrayList<>(), DEFAULT_SELF_CONTEXT);
     }
 
-    public Token(Symbol operator, String description) {
+    @JsonCreator
+    public Token(@JsonProperty("operator") Symbol operator, @JsonProperty("description") String description) {
         this(operator, description, DEFAULT_MULTIPLIER, new ArrayList<>(), DEFAULT_SELF_CONTEXT);
     }
 

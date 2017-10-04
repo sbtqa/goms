@@ -1,0 +1,22 @@
+{
+  "fillField": {
+    "operator": "KK",
+    "description": "fillField"
+  },
+  "clickElementByTitle": {
+    "operator": "BB",
+    "description": "clickElementByTitle"
+  },
+  "pressKey": {
+    "operator": "K",
+    "description": "pressKey"
+  },
+  "openPage": {
+    "operator": "O",
+    "description": "openPage"
+  },
+  "elementIsFocused": {
+    "operator": "F",
+    "description": "elementIsFocused"
+  }
+}
