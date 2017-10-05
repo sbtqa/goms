@@ -15,8 +15,8 @@
     "operator": "O",
     "description": "openPage"
   },
-  "elementIsFocused": {
+  "isElementFocused": {
     "operator": "F",
-    "description": "elementIsFocused"
+    "description": "isElementFocused"
   }
 }
