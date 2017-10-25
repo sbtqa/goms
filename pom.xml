@@ -45,19 +45,13 @@
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.2</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>Jackson-annotations</artifactId>
-            <version>2.9.2</version>
+            <version>2.3.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>Jackson-core</artifactId>
+            <artifactId>jackson-databind</artifactId>
             <version>2.9.2</version>
             <type>jar</type>
         </dependency>
