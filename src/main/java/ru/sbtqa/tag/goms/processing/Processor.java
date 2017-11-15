@@ -90,7 +90,9 @@ public class Processor {
                     }
 
                     workflow.addAll(Wrapper.wrap(token));
-                    workflow.add(new Token(Symbol.T));
+                    if (!token.getDescription().toLowerCase().contains("tab")) {
+                        workflow.add(new Token(Symbol.T));
+                    }
                     break;
 
                 default:
