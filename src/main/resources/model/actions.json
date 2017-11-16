@@ -18,5 +18,13 @@
   "isElementFocused": {
     "operator": "F",
     "description": "isElementFocused"
+  },
+  "setCheckBox": {
+    "operator": "BB",
+    "description": "setCheckBox"
+  },
+  "select": {
+    "operator": "BB",
+    "description": "select"
   }
 }

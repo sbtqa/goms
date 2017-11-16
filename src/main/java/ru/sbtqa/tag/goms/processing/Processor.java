@@ -9,6 +9,11 @@ import ru.sbtqa.tag.goms.utils.Regex;
 
 public class Processor {
 
+    public static final String TEMPLATE_ACTION_SELECT = "(выбирает)";
+    public static final String TEMPLATE_ACTION_CHECKBOX = "(отмечает признак)";
+    public static final String TEMPLATE_STEP_INFOCUS = "в фокусе элемент \"%s\"";
+    public static final String TEMPLATE_KEY_TAB = "tab";
+
     public static HandContext handContext;
     public static String focusedElement = "";
 
@@ -24,6 +29,7 @@ public class Processor {
 
                     workflow.addAll(Wrapper.wrap(token));
                     workflow.add(new Token(Symbol.M));
+                    focusedElement = "";
                     break;
 
                 case F:
@@ -44,15 +50,19 @@ public class Processor {
                     }
                     workflow.add(new Token(Symbol.P));
                     workflow.addAll(Wrapper.wrap(token));
-                    workflow.add(new Token(Symbol.T));
+
+                    if (!token.getDescription().toLowerCase().contains(TEMPLATE_ACTION_SELECT)
+                            && !token.getDescription().toLowerCase().contains(TEMPLATE_ACTION_CHECKBOX)) {
+                        workflow.add(new Token(Symbol.T));
+                    }
                     break;
 
                 case KK:
                     if (!"".equals(focusedElement) && token.getDescription().contains(focusedElement)) {
                         if (workflow.get(workflow.size() - 1).getOperator() != Symbol.M) {
-                            workflow.add(new Token(Symbol.M, "в фокусе элемент \"" + focusedElement + "\""));
+                            workflow.add(new Token(Symbol.M, String.format(TEMPLATE_STEP_INFOCUS, focusedElement)));
                         } else {
-                            workflow.set(workflow.size() - 1, workflow.get(workflow.size() - 1).setDescription("в фокусе элемент \"" + focusedElement + "\""));
+                            workflow.set(workflow.size() - 1, workflow.get(workflow.size() - 1).setDescription(String.format(TEMPLATE_STEP_INFOCUS, focusedElement)));
                         }
                     } else {
                         // insert M operator before KK 
@@ -76,6 +86,7 @@ public class Processor {
                     token.setMultiplier(Regex.get(token.getDescription(), "\"[\\w\\s]+\"").replace("\"", "").length());
 
                     workflow.addAll(Wrapper.wrap(token));
+                    focusedElement = "";
                     break;
 
                 case K:
@@ -90,7 +101,7 @@ public class Processor {
                     }
 
                     workflow.addAll(Wrapper.wrap(token));
-                    if (!token.getDescription().toLowerCase().contains("tab")) {
+                    if (!token.getDescription().toLowerCase().contains(TEMPLATE_KEY_TAB)) {
                         workflow.add(new Token(Symbol.T));
                     }
                     break;
