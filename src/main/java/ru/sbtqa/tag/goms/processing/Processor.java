@@ -20,7 +20,8 @@ public class Processor {
     public static List<Token> process(List<Token> tokens) {
         List<Token> workflow = new ArrayList<>();
         handContext = HandContext.ON_MOUSE;
-
+        focusedElement = "";
+        
         for (Token token : tokens) {
             switch (token.getOperator()) {
                 case O:
