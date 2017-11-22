@@ -21,7 +21,7 @@ public class Processor {
         List<Token> workflow = new ArrayList<>();
         handContext = HandContext.ON_MOUSE;
         focusedElement = "";
-        
+
         for (Token token : tokens) {
             switch (token.getOperator()) {
                 case O:
@@ -81,13 +81,13 @@ public class Processor {
                         workflow.add(new Token(Symbol.BB));
                         workflow.add(new Token(Symbol.M));
                         workflow.add(new Token(Symbol.H));
-                        handContext = HandContext.ON_KEYBOARD;
                         workflow.add(new Token(Symbol.M));
                     }
                     token.setMultiplier(Regex.get(token.getDescription(), "\"[\\w\\s]+\"").replace("\"", "").length());
 
                     workflow.addAll(Wrapper.wrap(token));
                     focusedElement = "";
+                    handContext = HandContext.ON_KEYBOARD;
                     break;
 
                 case K:
