@@ -40,7 +40,7 @@ public class Processor {
 
                 case BB:
                     // insert M operator before BB 
-                    if (workflow.get(workflow.size() - 1).getOperator() != Symbol.M) {
+                    if (workflow.isEmpty() || workflow.get(workflow.size() - 1).getOperator() != Symbol.M) {
                         workflow.add(new Token(Symbol.M));
                     }
 
@@ -67,7 +67,7 @@ public class Processor {
                         }
                     } else {
                         // insert M operator before KK 
-                        if (workflow.get(workflow.size() - 1).getOperator() != Symbol.M) {
+                        if (workflow.isEmpty() || workflow.get(workflow.size() - 1).getOperator() != Symbol.M) {
                             workflow.add(new Token(Symbol.M));
                         }
 
@@ -91,7 +91,7 @@ public class Processor {
                     break;
 
                 case K:
-                    if (workflow.get(workflow.size() - 1).getOperator() != Symbol.M) {
+                    if (workflow.isEmpty() || workflow.get(workflow.size() - 1).getOperator() != Symbol.M) {
                         workflow.add(new Token(Symbol.M));
                     }
 
