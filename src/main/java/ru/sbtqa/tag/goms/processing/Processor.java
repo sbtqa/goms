@@ -49,11 +49,18 @@ public class Processor {
                         handContext = HandContext.ON_MOUSE;
                         workflow.add(new Token(Symbol.M));
                     }
+                    
+                    if (token.getDescription().toLowerCase().contains(TEMPLATE_ACTION_SELECT)) {
+                      workflow.add(new Token(Symbol.P));
+                      workflow.add(new Token(Symbol.BB));
+                      workflow.add(new Token(Symbol.T));
+                      workflow.add(new Token(Symbol.M));
+                    }
+                    
                     workflow.add(new Token(Symbol.P));
                     workflow.addAll(Wrapper.wrap(token));
 
-                    if (!token.getDescription().toLowerCase().contains(TEMPLATE_ACTION_SELECT)
-                            && !token.getDescription().toLowerCase().contains(TEMPLATE_ACTION_CHECKBOX)) {
+                    if (!token.getDescription().toLowerCase().contains(TEMPLATE_ACTION_CHECKBOX)) {
                         workflow.add(new Token(Symbol.T));
                     }
                     break;
