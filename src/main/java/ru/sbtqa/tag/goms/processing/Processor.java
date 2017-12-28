@@ -13,7 +13,9 @@ public class Processor {
     public static final String TEMPLATE_ACTION_CHECKBOX = "(отмечает признак)";
     public static final String TEMPLATE_STEP_INFOCUS = "в фокусе элемент \"%s\"";
     public static final String TEMPLATE_KEY_TAB = "tab";
-
+    private static final String REGEX_INQUOTES = "\"[\\w\\s]+\"";
+    
+    
     public static HandContext handContext;
     public static String focusedElement = "";
 
@@ -25,7 +27,7 @@ public class Processor {
         for (Token token : tokens) {
             switch (token.getOperator()) {
                 case O:
-                    String pageName = Regex.get(token.getDescription(), "\"[\\w\\s]+\"");
+                    String pageName = Regex.get(token.getDescription(), REGEX_INQUOTES);
                     token.setDescription("Экран " + pageName);
 
                     workflow.addAll(Wrapper.wrap(token));
@@ -35,7 +37,7 @@ public class Processor {
 
                 case F:
                     // init focused element 
-                    focusedElement = Regex.get(token.getDescription(), "\"[\\w\\s]+\"").replace("\"", "");
+                    focusedElement = Regex.get(token.getDescription(), REGEX_INQUOTES).replace("\"", "");
                     break;
 
                 case BB:
@@ -90,7 +92,7 @@ public class Processor {
                         workflow.add(new Token(Symbol.H));
                         workflow.add(new Token(Symbol.M));
                     }
-                    token.setMultiplier(Regex.get(token.getDescription(), "\"[\\w\\s]+\"").replace("\"", "").length());
+                    token.setMultiplier(Regex.get(token.getDescription(), REGEX_INQUOTES).replace("\"", "").length());
 
                     workflow.addAll(Wrapper.wrap(token));
                     focusedElement = "";
