@@ -17,14 +17,18 @@
   },
   "isElementFocused": {
     "operator": "F",
-    "description": "isElementFocused"
+    "description": "в фокусе элемент \"%s\""
   },
   "setCheckBox": {
     "operator": "BB",
-    "description": "setCheckBox"
+    "description": "отмечает признак"
   },
   "select": {
     "operator": "BB",
-    "description": "select"
+    "description": "выбирает"
+  },
+  "selectWithoutSystemResponse": {
+    "operator": "BB",
+    "description": "выбирает без отклика системы"
   }
 }
