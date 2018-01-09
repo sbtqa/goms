@@ -1,4 +1,4 @@
-package ru.sbtqa.tag.goms.processing.tests.processing;
+package ru.sbtqa.tag.goms.processing.tests;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +86,7 @@ public class BBTests {
     }
     
     @Test
-    public void SetCheckBox() {
+    public void SetCheckBoxTest() {
         // A1
         String setCheckbox = "* пользователь (отмечает признак) \"Поиск по каталогу\"";
         
