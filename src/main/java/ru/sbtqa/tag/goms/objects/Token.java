@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Token {
 
@@ -124,10 +125,40 @@ public class Token {
 
     @Override
     public String toString() {
-        return "Token[stepName=" + description 
-                + ", operator=" + operator 
-                + ", multiplier=" + multiplier 
-                + ", prelims=" + prelims 
+        return "Token[stepName=" + description
+                + ", operator=" + operator
+                + ", multiplier=" + multiplier
+                + ", prelims=" + prelims
                 + ", selfContext=" + selfContext + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Token)) {
+            return false;
+        }
+
+        Token token = (Token) o;
+
+        return description.equals(token.description)
+                && operator.equals(token.operator)
+                && multiplier == token.multiplier
+                && prelims.equals(token.prelims)
+                && selfContext == token.selfContext;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.operator);
+        hash = 71 * hash + Objects.hashCode(this.description);
+        hash = 71 * hash + this.multiplier;
+        hash = 71 * hash + Objects.hashCode(this.prelims);
+        hash = 71 * hash + (this.selfContext ? 1 : 0);
+        return hash;
     }
 }
