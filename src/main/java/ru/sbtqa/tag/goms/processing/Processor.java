@@ -77,9 +77,9 @@ public class Processor {
                 case KK:
                     if (!"".equals(focusedElement) && token.getDescription().contains(focusedElement)) {
                         if (workflow.get(workflow.size() - 1).getOperator() != Symbol.M) {
-                            workflow.add(new Token(Symbol.M, String.format(actions.get("isElementFocused").getDescription().replace("\"", ""), focusedElement)));
+                            workflow.add(new Token(Symbol.M, String.format(actions.get("isElementFocused").getDescription(), focusedElement)));
                         } else {
-                            workflow.set(workflow.size() - 1, workflow.get(workflow.size() - 1).setDescription(String.format(actions.get("isElementFocused").getDescription().replace("\"", ""), focusedElement)));
+                            workflow.set(workflow.size() - 1, workflow.get(workflow.size() - 1).setDescription(String.format(actions.get("isElementFocused").getDescription(), focusedElement)));
                         }
                     } else {
                         // insert M operator before KK 
