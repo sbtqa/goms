@@ -96,10 +96,15 @@ public class Processor {
                         workflow.add(new Token(Symbol.P));
                         workflow.add(new Token(Symbol.BB));
                         workflow.add(new Token(Symbol.M));
+                    }
+                    
+                    // move hands on the keyboard
+                    if(handContext != HandContext.ON_KEYBOARD) {
                         workflow.add(new Token(Symbol.H));
                         workflow.add(new Token(Symbol.M));
                     }
-                    token.setMultiplier(Regex.get(token.getDescription(), Templates.REGEX_INQUOTES).replace("\"", "").length());
+                    
+                    token.setMultiplier(Regex.get(token.getDescription(), Templates.REGEX_INQUOTES, 2).replace("\"", "").length());
 
                     workflow.addAll(Wrapper.wrap(token));
                     focusedElement = "";
