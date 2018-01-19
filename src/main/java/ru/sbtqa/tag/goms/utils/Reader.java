@@ -24,7 +24,7 @@ public class Reader {
      *
      * @param absolutePath a pathname string
      * @return the symbol-operator map
-     * @throws java.io.FileNotFoundException 
+     * @throws java.io.FileNotFoundException if file not found
      */
     public static Map<Symbol, Operator> getModel(String absolutePath) throws FileNotFoundException {
         return getModel(new FileInputStream(new File(absolutePath)));
@@ -54,7 +54,7 @@ public class Reader {
      *
      * @param absolutePath a pathname string
      * @return the action-token map
-     * @throws java.io.FileNotFoundException
+     * @throws java.io.FileNotFoundException if file not found
      */
     public static Map<String, Token> getActions(String absolutePath) throws FileNotFoundException {
         return getActions(new FileInputStream(new File(absolutePath)));
