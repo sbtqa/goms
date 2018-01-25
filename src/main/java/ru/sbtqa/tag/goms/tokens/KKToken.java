@@ -1,11 +1,11 @@
 package ru.sbtqa.tag.goms.tokens;
 
+import ru.sbtqa.tag.goms.processing.States;
 import java.util.ArrayList;
 import java.util.List;
 import ru.sbtqa.tag.goms.contexts.HandContext;
 import ru.sbtqa.tag.goms.model.Model;
 import ru.sbtqa.tag.goms.model.Operator;
-import ru.sbtqa.tag.goms.processing.Context;
 import ru.sbtqa.tag.goms.utils.Regex;
 import ru.sbtqa.tag.goms.utils.Templates;
 
@@ -16,12 +16,12 @@ public class KKToken extends Token {
     }
 
     @Override
-    public List<Token> rule() {
+    public List<Token> atomize() {
         List<Token> workflow = new ArrayList<>();
         
-        if (!"".equals(Context.focusedElement) && getStep().contains(Context.focusedElement)) {
+        if (!"".equals(States.focusedElement) && getStep().contains(States.focusedElement)) {
             String elementFocusedDescription = Model.getOperator("F").getDescription();
-            String mentalPreparationWithFocusedElementDescription = String.format(elementFocusedDescription, Context.focusedElement);
+            String mentalPreparationWithFocusedElementDescription = String.format(elementFocusedDescription, States.focusedElement);
             workflow.add(TokenFactory.createToken(mentalPreparationWithFocusedElementDescription, "M"));
         } else {
             workflow.add(TokenFactory.createToken("M"));
@@ -38,7 +38,7 @@ public class KKToken extends Token {
         setMultiplier(Regex.get(getStep(), Templates.REGEX_INQUOTES, 2).replace("\"", "").length());
         
         workflow.addAll(this.wrap());
-        Context.focusedElement = "";
+        States.focusedElement = "";
         
         return workflow;
     }

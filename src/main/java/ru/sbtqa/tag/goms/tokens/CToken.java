@@ -2,11 +2,12 @@ package ru.sbtqa.tag.goms.tokens;
 
 import java.util.ArrayList;
 import java.util.List;
+import ru.sbtqa.tag.goms.contexts.HandContext;
 import ru.sbtqa.tag.goms.model.Operator;
 
-public class DefaultToken extends Token {
+public class CToken extends Token {
 
-    public DefaultToken(String step, int multiplier, Operator operator) {
+    public CToken(String step, int multiplier, Operator operator) {
         super(step, multiplier, operator);
     }
 
@@ -14,9 +15,11 @@ public class DefaultToken extends Token {
     public List<Token> atomize() {
         List<Token> workflow = new ArrayList<>();
         
+        workflow.add(TokenFactory.createToken("M"));
+        workflow.addAll(moveHandsOn(HandContext.ON_MOUSE));
+        workflow.add(TokenFactory.createToken("P"));
         workflow.addAll(this.wrap());
         
         return workflow;
     }
-    
 }

@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import ru.sbtqa.tag.goms.contexts.HandContext;
 import ru.sbtqa.tag.goms.model.Operator;
-import ru.sbtqa.tag.goms.processing.Context;
+import ru.sbtqa.tag.goms.processing.States;
 
 public abstract class Token {
 
     private String step;
     private int multiplier;
-    private final Operator operator;
+    private Operator operator;
 
     public Token(String step, int multiplier, Operator operator) {
         this.step = step;
@@ -19,7 +19,7 @@ public abstract class Token {
         this.operator = operator;
     }
 
-    public abstract List<Token> rule();
+    public abstract List<Token> atomize();
 
     /**
      * Apply prelims and self-context to token
@@ -48,16 +48,24 @@ public abstract class Token {
      * Insert H->M before token if it is self-contexted
      */
     private List<Token> applySelfContext() {
-        // TODO взять из operator selfContext и добавить его
-        return new ArrayList<>();
+        List<Token> workflowPortion = new ArrayList<>();
+
+        if (getOperator().isSelfContexted()) {
+            workflowPortion.add(TokenFactory.createToken("M"));
+            workflowPortion.add(TokenFactory.createToken("H"));
+            workflowPortion.add(TokenFactory.createToken("M"));
+            States.handContext = HandContext.SELF;
+        }
+
+        return workflowPortion;
     }
 
     protected List<Token> moveHandsOn(HandContext handContext) {
         List<Token> workflow = new ArrayList<>();
 
-        if (Context.handContext != handContext) {
+        if (States.handContext != handContext) {
             workflow.add(TokenFactory.createToken("H"));
-            Context.handContext = handContext;
+            States.handContext = handContext;
             workflow.add(TokenFactory.createToken("M"));
         }
 
@@ -84,6 +92,11 @@ public abstract class Token {
         this.step = step;
     }
 
+    public Token setOperator(Operator operator) {
+        this.operator = operator;
+        return this;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(step, multiplier, operator);
@@ -100,7 +113,7 @@ public abstract class Token {
             return false;
         }
     }
-    
+
     @Override
     public String toString() {
         return "Token[step=" + step

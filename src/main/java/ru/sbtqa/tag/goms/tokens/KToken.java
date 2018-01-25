@@ -1,7 +1,10 @@
 package ru.sbtqa.tag.goms.tokens;
 
+import java.util.ArrayList;
 import java.util.List;
+import ru.sbtqa.tag.goms.contexts.HandContext;
 import ru.sbtqa.tag.goms.model.Operator;
+import ru.sbtqa.tag.goms.utils.Templates;
 
 public class KToken extends Token {
 
@@ -10,8 +13,18 @@ public class KToken extends Token {
     }
 
     @Override
-    public List<Token> rule() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Token> atomize() {
+        List<Token> workflow = new ArrayList<>();
+
+        workflow.add(TokenFactory.createToken("M"));
+        workflow.addAll(moveHandsOn(HandContext.ON_KEYBOARD));
+
+        workflow.addAll(this.wrap());
+        if (!getStep().toLowerCase().contains(Templates.KEY_TAB)) {
+            workflow.add(TokenFactory.createToken("T"));
+        }
+
+        return workflow;
     }
-    
+
 }

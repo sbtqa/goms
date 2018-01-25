@@ -8,24 +8,23 @@ import ru.sbtqa.tag.goms.processing.Processor;
 import ru.sbtqa.tag.goms.tokens.Token;
 import ru.sbtqa.tag.goms.tokens.TokenFactory;
 
-public class BBTests {
+public class CTests {
 
     @Test
-    public void ClickTest() {
+    public void SetCheckBoxTest() {
         // A1
-        String step = "* пользователь (нажимает кнопку) \"Далее\"";
+        String step = "* пользователь (отмечает признак) \"Запомнить пароль\"";
         List<Token> feature = new ArrayList<>(); 
-        feature.add(TokenFactory.createToken(step, "BB")); 
+        feature.add(TokenFactory.createToken(step, "C")); 
         
         List<Token> expectedWorkflow = new ArrayList<>(); 
         expectedWorkflow.add(TokenFactory.createToken("M"));
         expectedWorkflow.add(TokenFactory.createToken("P"));
-        expectedWorkflow.add(TokenFactory.createToken(step, "BB"));
-        expectedWorkflow.add(TokenFactory.createToken("T"));
+        expectedWorkflow.add(TokenFactory.createToken(step, "C"));
         
         // A2
         List<Token> actualWorkflow = Processor.process(feature);
-        
+
         // A3
         Assert.assertEquals(expectedWorkflow, actualWorkflow);
     }

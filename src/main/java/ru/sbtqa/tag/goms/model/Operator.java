@@ -6,10 +6,10 @@ public class Operator {
 
     private String name;
     private int time;
-    private boolean isMultipliable;
     private String symbol;
     private String description;
-
+    private boolean selfContexted;
+    
     public String getName() {
         return name;
     }
@@ -24,14 +24,6 @@ public class Operator {
 
     public void setTime(int time) {
         this.time = time;
-    }
-
-    public boolean getIsMultipliable() {
-        return isMultipliable;
-    }
-
-    public void setIsMultipliable(boolean isMultipliable) {
-        this.isMultipliable = isMultipliable;
     }
 
     public String getSymbol() {
@@ -50,9 +42,17 @@ public class Operator {
         this.description = description;
     }
 
+    public boolean isSelfContexted() {
+        return selfContexted;
+    }
+
+    public void setSelfContexted(boolean selfContexted) {
+        this.selfContexted = selfContexted;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hashCode(name, time, isMultipliable, symbol, description);
+        return Objects.hashCode(name, time, symbol, description);
     }
 
     @Override
@@ -61,7 +61,6 @@ public class Operator {
             final Operator other = (Operator) obj;
             return Objects.equal(name, other.name)
                     && time == other.time
-                    && isMultipliable == other.isMultipliable
                     && Objects.equal(symbol, other.symbol)
                     && Objects.equal(description, other.description);
         } else {
@@ -71,7 +70,6 @@ public class Operator {
 
     @Override
     public String toString() {
-        return "Operator[symbol = " + symbol + ", name = " + name + ", time = " + time + ", isMultipliable = " + isMultipliable + ", description = " + description + "]";
+        return "Operator[symbol = " + symbol + ", name = " + name + ", time = " + time + ", description = " + description + "]";
     }
-
 }

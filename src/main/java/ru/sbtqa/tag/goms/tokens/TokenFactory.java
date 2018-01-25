@@ -23,12 +23,16 @@ public class TokenFactory {
                 return new KToken(step, multiplier, Model.getOperator(symbol));
             case "O":
                 return new OToken(step, multiplier, Model.getOperator(symbol));
-            case "P":
-                return new PToken(step, multiplier, Model.getOperator(symbol));
             case "BB":
                 return new BBToken(step, multiplier, Model.getOperator(symbol));
-            case "M":
-                return new MToken(step, multiplier, Model.getOperator(symbol));
+            case "C":
+                return new CToken(step, multiplier, Model.getOperator(symbol));
+            case "S":
+                return new SToken(step, multiplier, Model.getOperator(symbol));
+            case "ST":
+                return new STToken(step, multiplier, Model.getOperator(symbol));
+            case "F":
+                return new FToken(step, multiplier, Model.getOperator(symbol));
             default:
                 return new DefaultToken(step, multiplier, Model.getOperator(symbol));
         }

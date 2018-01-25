@@ -3,9 +3,7 @@ package ru.sbtqa.tag.goms.tokens;
 import java.util.ArrayList;
 import java.util.List;
 import ru.sbtqa.tag.goms.model.Operator;
-import ru.sbtqa.tag.goms.processing.Context;
-import ru.sbtqa.tag.goms.utils.Regex;
-import ru.sbtqa.tag.goms.utils.Templates;
+import ru.sbtqa.tag.goms.processing.States;
 
 public class OToken extends Token {
 
@@ -14,17 +12,17 @@ public class OToken extends Token {
     }
 
     @Override
-    public List<Token> rule() {
+    public List<Token> atomize() {
         List<Token> workflow = new ArrayList<>();
         
-        // TODO вынести в экспорт
-        String pageName = Regex.get(getStep(), Templates.REGEX_INQUOTES);
-        setStep("Экран " + pageName);
+//        // TODO вынести в экспорт
+//        String pageName = Regex.get(getStep(), Templates.REGEX_INQUOTES);
+//        setStep("Экран " + pageName);
 
+//        workflow.add(TokenFactory.createToken("M"));
         workflow.addAll(this.wrap());
-        workflow.add(TokenFactory.createToken("M"));
         
-        Context.focusedElement = "";
+        States.focusedElement = "";
         
         return workflow;
     }

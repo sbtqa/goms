@@ -4,107 +4,88 @@
       {  
         "name":"click",
         "symbol":"BB",
-        "description":"(заполняет поле)",
-        "time":200,
-        "isMultipliable":false
+        "description":"(нажимает кнопку)",
+        "time":200
+      },
+      {  
+        "name":"checkbox",
+        "symbol":"C",
+        "description":"(отмечает признак)",
+        "time":200
+      },
+      {  
+        "name":"select",
+        "symbol":"S",
+        "description":"(выбирает)",
+        "time":200
+      },
+      {  
+        "name":"select",
+        "symbol":"ST",
+        "description":"(выбирает без отклика системы)",
+        "time":200
       },
       {  
         "name":"button",
         "symbol":"K",
         "description":"(нажимает клавишу)",
-        "time":280,
-        "isMultipliable":false
+        "time":280
       },
       {  
         "name":"handmove",
         "symbol":"H",
         "description":"Перемещение руки",
-        "time":400,
-        "isMultipliable":false
+        "time":400
       },
       {  
         "name":"text",
         "symbol":"KK",
         "description":"(заполняет поле)",
-        "time":280,
-        "isMultipliable":true
+        "time":280
       },
       {  
         "name":"page",
         "symbol":"O",
         "description":"Открывается страница",
-        "time":0,
-        "isMultipliable":false
+        "time":0
       },
       {  
         "name":"mental",
         "symbol":"M",
         "description":"Ментальная подготовка",
-        "time":1200,
-        "isMultipliable":false
+        "time":1200
       },
       {  
         "name":"focus",
         "symbol":"F",
         "description":"в фокусе элемент \"%s\"",
-        "time":0,
-        "isMultipliable":false
+        "time":0
       },
       {  
         "name":"pointing",
         "symbol":"P",
         "description":"Указание мышкой",
-        "time":1100,
-        "isMultipliable":false
+        "time":1100
       },
       {  
         "name":"response",
         "symbol":"T",
         "description":"Ответ системы",
-        "time":100,
-        "isMultipliable":false
+        "time":100
       },
       {  
-        "name":"virtualkeyboard",
-        "symbol":"KY",
-        "description":"open the virtual keyboard",
-        "time":80,
-        "isMultipliable":false
+        "name":"tablet-key",
+        "symbol":"TK",
+        "description":"(прикладывает таблетку)",
+        "time":280,
+        "selfContexted":true
       },
       {  
-        "name":"search",
-        "symbol":"S",
-        "description":"searches for an item on the screen at an unknown position",
-        "time":1250,
-        "isMultipliable":false
-      },
-      {  
-        "name":"listen",
-        "symbol":"HE",
-        "description":"listens as someone speaks",
-        "time":200,
-        "isMultipliable":true
-      },
-      {  
-        "name":"speak",
-        "symbol":"SP",
-        "description":"tells someone",
-        "time":200,
-        "isMultipliable":true
-      },
-      {  
-        "name":"recall",
-        "symbol":"RE",
-        "description":"recalls memory information",
-        "time":550,
-        "isMultipliable":false
-      },
-      {  
-        "name":"remember",
-        "symbol":"ST",
-        "description":"remember the information in the working memory",
-        "time":50,
-        "isMultipliable":true
+        "name":"scan",
+        "symbol":"SC",
+        "description":"(сканирует штрихкод)",
+        "time":280,
+        "selfContexted":true
       }
     ]
   }
