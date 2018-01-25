@@ -12,9 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ru.sbtqa.tag.goms.objects.Model;
-import ru.sbtqa.tag.goms.objects.Operator;
-import ru.sbtqa.tag.goms.objects.Symbol;
+import ru.sbtqa.tag.goms.model.Model;
+import ru.sbtqa.tag.goms.model.Operator;
 import ru.sbtqa.tag.goms.objects.Token;
 
 public class Reader {
@@ -26,7 +25,7 @@ public class Reader {
      * @return the symbol-operator map
      * @throws java.io.FileNotFoundException if file not found
      */
-    public static Map<Symbol, Operator> getModel(String absolutePath) throws FileNotFoundException {
+    public static Map<String, Operator> getModel(String absolutePath) throws FileNotFoundException {
         return getModel(new FileInputStream(new File(absolutePath)));
     }
 
@@ -36,12 +35,12 @@ public class Reader {
      * @param json a json contents
      * @return the symbol-operator map
      */
-    public static Map<Symbol, Operator> getModel(InputStream json) {
-        Map<Symbol, Operator> map = new HashMap<>();
+    public static Map<String, Operator> getModel(InputStream json) {
+        Map<String, Operator> map = new HashMap<>();
         try {
             ObjectMapper mapper = new ObjectMapper();
             Model model = mapper.readValue(json, Model.class);
-            model.getOperator().forEach(operator -> map.put(operator.getSymbol(), operator));
+            model.getOperators().forEach(operator -> map.put(operator.getSymbol(), operator));
         } catch (IOException | NullPointerException ex) {
             Logger.getLogger(Reader.class.getName()).log(Level.SEVERE, "Error while reading model json", ex);
         }

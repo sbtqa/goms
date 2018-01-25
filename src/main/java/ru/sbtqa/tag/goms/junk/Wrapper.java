@@ -1,10 +1,10 @@
-package ru.sbtqa.tag.goms.processing;
+package ru.sbtqa.tag.goms.junk;
 
 import java.util.ArrayList;
 import java.util.List;
+import ru.sbtqa.tag.goms.contexts.HandContext;
 import ru.sbtqa.tag.goms.objects.Symbol;
 import ru.sbtqa.tag.goms.objects.Token;
-import ru.sbtqa.tag.goms.objects.contexts.HandContext;
 
 public class Wrapper {
 

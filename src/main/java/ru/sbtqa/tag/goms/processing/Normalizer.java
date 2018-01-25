@@ -39,6 +39,9 @@ public class Normalizer {
                 default:
                     normalizedWorkflow.add(token);
             }
+            
+            // TODO remove M - M sequences
+            
         }
         return normalizedWorkflow;
     }

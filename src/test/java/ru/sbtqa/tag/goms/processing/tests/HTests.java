@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
+import ru.sbtqa.tag.goms.junk.Processor;
 import ru.sbtqa.tag.goms.objects.Symbol;
 import ru.sbtqa.tag.goms.objects.Token;
-import ru.sbtqa.tag.goms.processing.Processor;
 
 public class HTests {
     

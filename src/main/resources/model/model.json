@@ -1,17 +1,17 @@
   {
     "name":"klm",
-    "operator":[  
+    "operators":[  
       {  
         "name":"click",
         "symbol":"BB",
-        "description":"Клик мышкой",
+        "description":"(заполняет поле)",
         "time":200,
         "isMultipliable":false
       },
       {  
         "name":"button",
         "symbol":"K",
-        "description":"Нажатие клавиши",
+        "description":"(нажимает клавишу)",
         "time":280,
         "isMultipliable":false
       },
@@ -25,7 +25,7 @@
       {  
         "name":"text",
         "symbol":"KK",
-        "description":"Печать текста",
+        "description":"(заполняет поле)",
         "time":280,
         "isMultipliable":true
       },
@@ -46,7 +46,7 @@
       {  
         "name":"focus",
         "symbol":"F",
-        "description":"Фокус на элементе",
+        "description":"в фокусе элемент \"%s\"",
         "time":0,
         "isMultipliable":false
       },
