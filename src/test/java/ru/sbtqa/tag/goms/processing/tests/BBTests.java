@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.sbtqa.tag.goms.processing.Processor;
-import ru.sbtqa.tag.goms.tokens.Token;
-import ru.sbtqa.tag.goms.tokens.TokenFactory;
+import ru.sbtqa.tag.goms.process.Processor;
+import ru.sbtqa.tag.goms.process.tokens.Token;
+import ru.sbtqa.tag.goms.process.tokens.TokenFactory;
 
 public class BBTests {
 

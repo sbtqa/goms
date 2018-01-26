@@ -1,13 +1,13 @@
-package ru.sbtqa.tag.goms.tokens;
+package ru.sbtqa.tag.goms.process.tokens;
 
 import java.util.ArrayList;
 import java.util.List;
 import ru.sbtqa.tag.goms.model.Operator;
-import ru.sbtqa.tag.goms.processing.States;
+import ru.sbtqa.tag.goms.process.States;
 import ru.sbtqa.tag.goms.utils.Regex;
 import ru.sbtqa.tag.goms.utils.Templates;
 
-public class FToken extends Token {
+class FToken extends Token {
 
     public FToken(String step, int multiplier, Operator operator) {
         super(step, multiplier, operator);
@@ -15,6 +15,7 @@ public class FToken extends Token {
 
     @Override
     public List<Token> atomize() {
+        System.out.println("! = " + getStep());
         States.focusedElement = Regex.get(getStep(), Templates.REGEX_INQUOTES).replace("\"", "");
         
         return new ArrayList<>();

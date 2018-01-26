@@ -1,11 +1,11 @@
-package ru.sbtqa.tag.goms.tokens;
+package ru.sbtqa.tag.goms.process.tokens;
 
+import ru.sbtqa.tag.goms.process.States;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
 import ru.sbtqa.tag.goms.contexts.HandContext;
 import ru.sbtqa.tag.goms.model.Operator;
-import ru.sbtqa.tag.goms.processing.States;
 
 public abstract class Token {
 

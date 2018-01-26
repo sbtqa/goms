@@ -1,11 +1,11 @@
-package ru.sbtqa.tag.goms.tokens;
+package ru.sbtqa.tag.goms.process.tokens;
 
 import java.util.ArrayList;
 import java.util.List;
 import ru.sbtqa.tag.goms.model.Operator;
-import ru.sbtqa.tag.goms.processing.States;
+import ru.sbtqa.tag.goms.process.States;
 
-public class OToken extends Token {
+class OToken extends Token {
 
     public OToken(String step, int multiplier, Operator operator) {
         super(step, multiplier, operator);

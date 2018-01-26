@@ -1,50 +1,59 @@
 package ru.sbtqa.tag.goms;
 
-import java.util.ArrayList;
 import java.util.List;
-import ru.sbtqa.tag.goms.processing.Processor;
-import ru.sbtqa.tag.goms.tokens.Token;
-import ru.sbtqa.tag.goms.tokens.TokenFactory;
+import java.util.Map;
+import ru.sbtqa.tag.goms.parse.Parser;
+import ru.sbtqa.tag.goms.output.Statistics;
+import ru.sbtqa.tag.goms.process.Processor;
+import ru.sbtqa.tag.goms.process.tokens.Token;
 
 public class Starter {
 
     public static void main(String[] args) {
-        List<Token> feature = new ArrayList<>();
-        feature.add(TokenFactory.createToken("* пользователь находится на странице \"Ввод паспортных данных\"", "O"));
-        feature.add(TokenFactory.createToken("* пользователь (заполняет поле) \"Серия\" \"5007\"", "KK"));
-        feature.add(TokenFactory.createToken("* пользователь (прикладывает таблетку)", "TK"));
-        feature.add(TokenFactory.createToken("* пользователь (заполняет поле) \"Номер\" \"483711\"", "KK"));
-        feature.add(TokenFactory.createToken("* пользователь (нажимает кнопку) \"Далее\"", "BB"));
-
-        List<Token> actualWorkflow = Processor.process(feature);
-        for (Token token : actualWorkflow) {
-            System.out.println(token);
+        
+        String document = "#language:ru\n" +
+"\n" +
+"Функционал: Ввод паспортных данных\n" +
+"\n" +
+"Сценарий: Стандартный ввод\n" +
+"* пользователь находится на странице \"Ввод паспортных данных\"\n" +
+"* пользователь (заполняет поле) \"Серия\" \"5007\"\n" +
+"* пользователь (заполняет поле) \"Номер\" \"483711\"\n" +
+"* пользователь (нажимает кнопку) \"Далее\"\n" +
+" \n" +
+"Сценарий: Ввод с использование кнопки Tab\n" +
+"* пользователь находится на странице \"Ввод паспортных данных\"\n" +
+"* пользователь (заполняет поле) \"Серия\" \"5007\"\n" +
+"* пользователь (нажимает клавишу) \"Tab\"\n" +
+"* в фокусе находится элемент \"Номер\"\n" +
+"* пользователь (заполняет поле) \"Номер\" \"483711\"\n" +
+"* пользователь (нажимает кнопку) \"Далее\"\n" +
+"\n" +
+"Сценарий: Ввод в смарт-поля\n" +
+"* пользователь находится на странице \"Ввод паспортных данных\"\n" +
+"* в фокусе находится элемент \"Серия\"\n" +
+"* пользователь (заполняет поле) \"Серия\" \"5007\"\n" +
+"* в фокусе находится элемент \"Номер\"\n" +
+"* пользователь (заполняет поле) \"Номер\" \"483711\"\n" +
+"* пользователь (нажимает клавишу) \"Enter\"" +
+                 "";
+        
+        Map<String, List<Token>> feature = Parser.parseFeature(document);
+        Map<String, List<Token>> processedFeature = Processor.process(feature);
+        for (Map.Entry<String, List<Token>> scenario : processedFeature.entrySet()) {
+            System.out.println(scenario.getKey());
+            for (Token token : scenario.getValue()) {
+                System.out.println(token);
+            }
         }
-//        
-//        List<Token> feature = new ArrayList<>();
-//        feature.add(TokenFactory.createToken("* пользователь находится на странице \"Ввод паспортных данных\"", "O"));
-//        feature.add(TokenFactory.createToken("* пользователь (заполняет поле) \"Серия\" \"5007\"", "KK"));
-//        feature.add(TokenFactory.createToken("* пользователь (нажимает клавишу) \"Tab\"", "K"));
-//        feature.add(TokenFactory.createToken("* в фокусе находится элемент \"Номер\"", "F"));
-//        feature.add(TokenFactory.createToken("* пользователь (заполняет поле) \"Номер\" \"483711\"", "KK"));
-//        feature.add(TokenFactory.createToken("* пользователь (нажимает кнопку) \"Далее\"", "BB"));
-//
-//        List<Token> actualWorkflow = Processor.process(feature);
-//        for (Token token : actualWorkflow) {
-//            System.out.println(token.getOperator().getSymbol());
-//        }
-//        
-//        List<Token> feature = new ArrayList<>();
-//        feature.add(TokenFactory.createToken("* пользователь находится на странице \"Ввод паспортных данных\"", "O"));
-//        feature.add(TokenFactory.createToken("* в фокусе находится элемент \"Серия\"", "F"));
-//        feature.add(TokenFactory.createToken("* пользователь (заполняет поле) \"Серия\" \"5007\"", "KK"));
-//        feature.add(TokenFactory.createToken("* в фокусе находится элемент \"Номер\"", "F"));
-//        feature.add(TokenFactory.createToken("* пользователь (заполняет поле) \"Номер\" \"483711\"", "KK"));
-//        feature.add(TokenFactory.createToken("* пользователь (нажимает клавишу) \"Enter\"", "K"));
-//
-//        List<Token> actualWorkflow = Processor.process(feature);
-//        for (Token token : actualWorkflow) {
-//            System.out.println(token.getOperator().getSymbol());
-//        }
+        
+//        System.out.println(Statistics.getInfoByScreens(Processor.process(feature)));
+        for (Map.Entry<String, Map<String, Float>> scenario : Statistics.getInfoByScreens(Processor.process(feature)).entrySet()) {
+            System.out.println(scenario.getKey());
+            for (Map.Entry<String, Float> screen : scenario.getValue().entrySet()) {
+                System.out.println(screen.getKey() + "  " + screen.getValue());
+            }
+        }        
+        
     }
 }

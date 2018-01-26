@@ -4,31 +4,36 @@
       {  
         "name":"click",
         "symbol":"BB",
-        "description":"(нажимает кнопку)",
+        "description":"Клик мышкой",
+        "term":"(нажимает кнопку)",
         "time":200
       },
       {  
         "name":"checkbox",
         "symbol":"C",
-        "description":"(отмечает признак)",
+        "description":"Клик мышкой",
+        "term":"(отмечает признак)",
         "time":200
       },
       {  
         "name":"select",
         "symbol":"S",
-        "description":"(выбирает)",
+        "description":"Выбор из выпадающего списка",
+        "term":"(выбирает)",
         "time":200
       },
       {  
         "name":"select",
         "symbol":"ST",
-        "description":"(выбирает без отклика системы)",
+        "description":"Выбор из выпадающего списка",
+        "term":"(выбирает без отклика системы)",
         "time":200
       },
       {  
         "name":"button",
         "symbol":"K",
-        "description":"(нажимает клавишу)",
+        "description":"Нажатие клавиши",
+        "term":"(нажимает клавишу)",
         "time":280
       },
       {  
@@ -40,13 +45,15 @@
       {  
         "name":"text",
         "symbol":"KK",
-        "description":"(заполняет поле)",
+        "description":"Печать текста",
+        "term":"(заполняет поле)",
         "time":280
       },
       {  
         "name":"page",
         "symbol":"O",
         "description":"Открывается страница",
+        "term":"^.*?пользователь (?:находится на странице|открывается страница|открывается вкладка мастера) \"([^.*?\"]*)\"$",
         "time":0
       },
       {  
@@ -58,7 +65,8 @@
       {  
         "name":"focus",
         "symbol":"F",
-        "description":"в фокусе элемент \"%s\"",
+        "description":"Фокусирование на элементе",
+        "term":"^.*?в фокусе находится элемент \"([^.*?\"]*)\"$",
         "time":0
       },
       {  
@@ -76,14 +84,16 @@
       {  
         "name":"tablet-key",
         "symbol":"TK",
-        "description":"(прикладывает таблетку)",
+        "description":"Прикладывание ключ-таблетки",
+        "term":"(прикладывает таблетку)",
         "time":280,
         "selfContexted":true
       },
       {  
         "name":"scan",
         "symbol":"SC",
-        "description":"(сканирует штрихкод)",
+        "description":"Сканирование штрихкода",
+        "term":"(сканирует штрихкод)",
         "time":280,
         "selfContexted":true
       }

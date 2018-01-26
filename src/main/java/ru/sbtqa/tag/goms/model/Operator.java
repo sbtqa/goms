@@ -8,6 +8,7 @@ public class Operator {
     private int time;
     private String symbol;
     private String description;
+    private String term;
     private boolean selfContexted;
     
     public String getName() {
@@ -42,6 +43,14 @@ public class Operator {
         this.description = description;
     }
 
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+    
     public boolean isSelfContexted() {
         return selfContexted;
     }
@@ -52,7 +61,7 @@ public class Operator {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name, time, symbol, description);
+        return Objects.hashCode(name, time, symbol, description, term);
     }
 
     @Override
@@ -62,7 +71,8 @@ public class Operator {
             return Objects.equal(name, other.name)
                     && time == other.time
                     && Objects.equal(symbol, other.symbol)
-                    && Objects.equal(description, other.description);
+                    && Objects.equal(description, other.description)
+                    && Objects.equal(term, other.term);
         } else {
             return false;
         }
@@ -70,6 +80,10 @@ public class Operator {
 
     @Override
     public String toString() {
-        return "Operator[symbol = " + symbol + ", name = " + name + ", time = " + time + ", description = " + description + "]";
+        return "Operator[symbol = " + symbol 
+                + ", name = " + name 
+                + ", time = " + time 
+                + ", description = " + description 
+                + ", term = " + term + "]";
     }
 }

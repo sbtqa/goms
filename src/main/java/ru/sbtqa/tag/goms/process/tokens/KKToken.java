@@ -1,15 +1,15 @@
-package ru.sbtqa.tag.goms.tokens;
+package ru.sbtqa.tag.goms.process.tokens;
 
-import ru.sbtqa.tag.goms.processing.States;
 import java.util.ArrayList;
 import java.util.List;
 import ru.sbtqa.tag.goms.contexts.HandContext;
-import ru.sbtqa.tag.goms.model.Model;
 import ru.sbtqa.tag.goms.model.Operator;
+import ru.sbtqa.tag.goms.model.Operators;
+import ru.sbtqa.tag.goms.process.States;
 import ru.sbtqa.tag.goms.utils.Regex;
 import ru.sbtqa.tag.goms.utils.Templates;
 
-public class KKToken extends Token {
+class KKToken extends Token {
 
     public KKToken(String step, int multiplier, Operator operator) {
         super(step, multiplier, operator);
@@ -18,10 +18,10 @@ public class KKToken extends Token {
     @Override
     public List<Token> atomize() {
         List<Token> workflow = new ArrayList<>();
-        
+        System.out.println("!!! = " + States.focusedElement);
         if (!"".equals(States.focusedElement) && getStep().contains(States.focusedElement)) {
-            String elementFocusedDescription = Model.getOperator("F").getDescription();
-            String mentalPreparationWithFocusedElementDescription = String.format(elementFocusedDescription, States.focusedElement);
+            String elementFocusedTerm = Operators.INSTANCE.getOperator("F").getTerm();
+            String mentalPreparationWithFocusedElementDescription = String.format(elementFocusedTerm, States.focusedElement);
             workflow.add(TokenFactory.createToken(mentalPreparationWithFocusedElementDescription, "M"));
         } else {
             workflow.add(TokenFactory.createToken("M"));

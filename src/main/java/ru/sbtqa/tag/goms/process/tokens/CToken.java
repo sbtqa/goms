@@ -1,11 +1,11 @@
-package ru.sbtqa.tag.goms.tokens;
+package ru.sbtqa.tag.goms.process.tokens;
 
 import java.util.ArrayList;
 import java.util.List;
 import ru.sbtqa.tag.goms.contexts.HandContext;
 import ru.sbtqa.tag.goms.model.Operator;
 
-public class CToken extends Token {
+class CToken extends Token {
 
     public CToken(String step, int multiplier, Operator operator) {
         super(step, multiplier, operator);

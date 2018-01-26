@@ -1,4 +1,4 @@
-package ru.sbtqa.tag.goms.processing;
+package ru.sbtqa.tag.goms.process;
 
 import ru.sbtqa.tag.goms.contexts.HandContext;
 

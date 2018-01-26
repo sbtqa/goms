@@ -1,8 +1,8 @@
-package ru.sbtqa.tag.goms.processing;
+package ru.sbtqa.tag.goms.process;
 
 import java.util.ArrayList;
 import java.util.List;
-import ru.sbtqa.tag.goms.tokens.Token;
+import ru.sbtqa.tag.goms.process.tokens.Token;
 
 public class Normalizer {
 
