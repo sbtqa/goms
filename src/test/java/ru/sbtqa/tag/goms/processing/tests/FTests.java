@@ -26,7 +26,7 @@ public class FTests {
         expectedWorkflow.add(TokenFactory.createToken("H"));
         expectedWorkflow.add(TokenFactory.createToken("M"));
         expectedWorkflow.add(TokenFactory.createToken(step, 10, "KK"));
-        expectedWorkflow.add(TokenFactory.createToken("в фокусе элемент \"Серия и номер\"", "M"));
+        expectedWorkflow.add(TokenFactory.createToken("Фокусирование на элементе \"Серия и номер\"", "M"));
         expectedWorkflow.add(TokenFactory.createToken(step, 10, "KK"));
 
         // A2

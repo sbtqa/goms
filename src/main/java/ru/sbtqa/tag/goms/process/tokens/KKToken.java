@@ -20,8 +20,8 @@ class KKToken extends Token {
         List<Token> workflow = new ArrayList<>();
         System.out.println("!!! = " + States.focusedElement);
         if (!"".equals(States.focusedElement) && getStep().contains(States.focusedElement)) {
-            String elementFocusedTerm = Operators.INSTANCE.getOperator("F").getTerm();
-            String mentalPreparationWithFocusedElementDescription = String.format(elementFocusedTerm, States.focusedElement);
+            String elementFocusedDescription = Operators.INSTANCE.getOperator("F").getDescription();
+            String mentalPreparationWithFocusedElementDescription = String.format(elementFocusedDescription, States.focusedElement);
             workflow.add(TokenFactory.createToken(mentalPreparationWithFocusedElementDescription, "M"));
         } else {
             workflow.add(TokenFactory.createToken("M"));
