@@ -13,7 +13,7 @@ import ru.sbtqa.tag.goms.process.tokens.TokenFactory;
 public class ParserTests {
 
     @Test
-    public void ClickTest() {
+    public void ParseTest() {
         // A1
         String document = "#language:ru\n"
                 + "\n"
@@ -44,13 +44,14 @@ public class ParserTests {
         scenario2.add(TokenFactory.createToken("* пользователь находится на странице \"Ввод паспортных данных\"", "O"));
         scenario2.add(TokenFactory.createToken("* пользователь (заполняет поле) \"Серия\" \"5007\"", "KK"));
         scenario2.add(TokenFactory.createToken("* пользователь (нажимает клавишу) \"Tab\"", "K"));
+        scenario2.add(TokenFactory.createToken("* в фокусе находится элемент \"Номер\"", "F"));
         scenario2.add(TokenFactory.createToken("* пользователь (заполняет поле) \"Номер\" \"483711\"", "KK"));
         scenario2.add(TokenFactory.createToken("* пользователь (нажимает кнопку) \"Далее\"", "BB"));
         expectedFeature.put("Ввод с использование кнопки Tab", scenario2);
 
         // A2
         Map<String, List<Token>> actualFeature = Parser.parseFeature(document);
-        
+
         // A3
         Assert.assertEquals(expectedFeature, actualFeature);
     }
