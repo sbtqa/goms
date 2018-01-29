@@ -32,8 +32,6 @@ public class Processor {
         
         return processedFeature;
     }
-
-    
     
     private static void setStatesToDefault() {
         States.handContext = HandContext.ON_MOUSE;

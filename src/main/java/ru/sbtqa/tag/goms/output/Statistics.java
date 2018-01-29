@@ -7,7 +7,7 @@ import ru.sbtqa.tag.goms.process.tokens.Token;
 
 public class Statistics {
 
-    private static final String TEXT_UNDEFINED_SCREEN = "undefined_screen";
+    private static final String UNDEFINED_SCREEN = "undefined_screen";
 
     public static Map<String, Map<String, Float>> getInfoByScreens(Map<String, List<Token>> feature) {
         /*
@@ -22,7 +22,7 @@ public class Statistics {
         for (Map.Entry<String, List<Token>> scenario : feature.entrySet()) {
             Float sum = new Float(0);
             Map<String, Float> screens = new LinkedHashMap<>();
-            String currentScreen = TEXT_UNDEFINED_SCREEN;
+            String currentScreen = UNDEFINED_SCREEN;
             int counter = 0;
             for (Token token : scenario.getValue()) {
                 sum += (float) token.getOperator().getTime() / 1000 * token.getMultiplier();

@@ -2,8 +2,8 @@ package ru.sbtqa.tag.goms;
 
 import java.util.List;
 import java.util.Map;
+import ru.sbtqa.tag.goms.output.Export;
 import ru.sbtqa.tag.goms.parse.Parser;
-import ru.sbtqa.tag.goms.output.Statistics;
 import ru.sbtqa.tag.goms.process.Processor;
 import ru.sbtqa.tag.goms.process.tokens.Token;
 
@@ -47,13 +47,15 @@ public class Starter {
             }
         }
         
+        Export.writeIntoExcel("/tmp/a.xlsx", processedFeature);
+        
 //        System.out.println(Statistics.getInfoByScreens(Processor.process(feature)));
-        for (Map.Entry<String, Map<String, Float>> scenario : Statistics.getInfoByScreens(Processor.process(feature)).entrySet()) {
-            System.out.println(scenario.getKey());
-            for (Map.Entry<String, Float> screen : scenario.getValue().entrySet()) {
-                System.out.println(screen.getKey() + "  " + screen.getValue());
-            }
-        }        
+//        for (Map.Entry<String, Map<String, Float>> scenario : Statistics.getInfoByScreens(Processor.process(feature)).entrySet()) {
+//            System.out.println(scenario.getKey());
+//            for (Map.Entry<String, Float> screen : scenario.getValue().entrySet()) {
+//                System.out.println(screen.getKey() + "  " + screen.getValue());
+//            }
+//        }        
         
     }
 }
