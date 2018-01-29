@@ -1,30 +1,42 @@
 package ru.sbtqa.tag.goms.output;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import ru.sbtqa.tag.goms.process.tokens.Token;
 import ru.sbtqa.tag.goms.utils.Regex;
 import ru.sbtqa.tag.goms.utils.Templates;
 
 public class Export {
 
+    private static final short DEFAULT_ROW_HEIGHT = 350;
+    private static final int HEIGHT_COEFFICIENT = 20;
+
+    private static final XSSFColor GREY = new XSSFColor(new Color(235, 235, 235));
+
+    private static final Logger LOGGER = Logger.getLogger( Export.class.getName() );
+    
     private enum COLUMNS {
         A(0), B(1), C(2), D(3), E(4), F(5), G(6);
 
@@ -38,20 +50,16 @@ public class Export {
             return index;
         }
     }
-
-    private static final short DEFAULT_ROW_HEIGHT = 350;
-    private static final int HEIGHT_COEFFICIENT = 20;
-
+    
     public static void writeIntoExcel(String filePath, Map<String, List<Token>> cache) {
-        HSSFWorkbook book = new HSSFWorkbook();
-
+        XSSFWorkbook book = new XSSFWorkbook();
         File file = new File(filePath);
         if (file.exists()) {
             FileInputStream excelFile;
             try {
                 excelFile = new FileInputStream(file);
                 // remove all of sheets from existing file
-                try (Workbook existsBook = new HSSFWorkbook(excelFile)) {
+                try (Workbook existsBook = new XSSFWorkbook(excelFile)) {
                     // remove all of sheets from existing file
                     for (int i = existsBook.getNumberOfSheets() - 1; i >= 0; i--) {
                         existsBook.removeSheetAt(i);
@@ -61,13 +69,13 @@ public class Export {
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.WARNING, e.getMessage(), e);
             }
         }
 
         try {
             for (Map.Entry<String, List<Token>> scenario : cache.entrySet()) {
-                HSSFSheet sheet = book.createSheet(scenario.getKey());
+                Sheet sheet = book.createSheet(scenario.getKey());
                 sheet.setDisplayGridlines(false);
                 sheet.setDefaultRowHeight(DEFAULT_ROW_HEIGHT);
 
@@ -164,7 +172,7 @@ public class Export {
                 totalsNameSec.setCellValue("Итого (Сек.):");
                 totalsNameSec.setCellStyle(getHeaderCellStyle(book));
                 Cell totals = row.createCell(COLUMNS.B.getIndex());
-                totals.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+                totals.setCellType(CellType.FORMULA);
                 String strFormula = "SUM(" + COLUMNS.B.toString() + "1:" + COLUMNS.B.toString() + rowCount + ")";
                 totals.setCellFormula(strFormula);
                 totals.setCellStyle(getScreenCellStyle(book));
@@ -177,7 +185,7 @@ public class Export {
                 totalsNameMin.setCellValue("Итого (Мин.):");
                 totalsNameMin.setCellStyle(getHeaderCellStyle(book));
                 Cell totalsMin = row.createCell(COLUMNS.B.getIndex());
-                totalsMin.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+                totalsMin.setCellType(CellType.FORMULA);
                 strFormula = COLUMNS.B.toString() + rowCount + "/60";
                 totalsMin.setCellFormula(strFormula);
                 totalsMin.setCellStyle(getScreenCellStyle(book));
@@ -192,7 +200,7 @@ public class Export {
             book.write(new FileOutputStream(file));
             book.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.WARNING, e.getMessage(), e);
         }
     }
 
@@ -201,7 +209,6 @@ public class Export {
 
         Font font = book.createFont();
         font.setBold(false);
-//		font.setFontName("PT Serif");
         font.setFontHeight((short) (16 * HEIGHT_COEFFICIENT));
 
         cellStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -215,9 +222,8 @@ public class Export {
 
         Font font = book.createFont();
         font.setBold(false);
-//		font.setFontName("PT Serif");
         font.setFontHeight((short) (11 * HEIGHT_COEFFICIENT));
-        font.setColor(HSSFColor.BROWN.index);
+        font.setColor(IndexedColors.BROWN.getIndex());
 
         cellStyle.setFont(font);
         cellStyle.setBorderBottom(BorderStyle.THIN);
@@ -231,7 +237,6 @@ public class Export {
 
         Font font = book.createFont();
         font.setBold(true);
-//		font.setFontName("PT Sans");
         font.setFontHeight((short) (11 * HEIGHT_COEFFICIENT));
 
         cellStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -241,8 +246,8 @@ public class Export {
         return cellStyle;
     }
 
-    private static CellStyle getContentCellStyle(HSSFWorkbook book, HorizontalAlignment align, boolean isPainted) {
-        CellStyle cellStyle = book.createCellStyle();
+    private static CellStyle getContentCellStyle(XSSFWorkbook book, HorizontalAlignment align, boolean isPainted) {
+        XSSFCellStyle cellStyle = book.createCellStyle();
 
         Font font = book.createFont();
         font.setFontHeight((short) (11 * HEIGHT_COEFFICIENT));
@@ -251,7 +256,7 @@ public class Export {
         cellStyle.setAlignment(align);
 
         if (isPainted) {
-            cellStyle.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+            cellStyle.setFillForegroundColor(GREY);
             cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         }
         return cellStyle;
