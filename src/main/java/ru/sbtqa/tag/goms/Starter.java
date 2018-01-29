@@ -47,7 +47,7 @@ public class Starter {
             }
         }
         
-        Export.writeIntoExcel("/tmp/a.xlsx", processedFeature);
+        Export.writeIntoExcel("/home/kosteman/a.xlsx", processedFeature);
         
 //        System.out.println(Statistics.getInfoByScreens(Processor.process(feature)));
 //        for (Map.Entry<String, Map<String, Float>> scenario : Statistics.getInfoByScreens(Processor.process(feature)).entrySet()) {

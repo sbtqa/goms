@@ -15,11 +15,6 @@ class OToken extends Token {
     public List<Token> atomize() {
         List<Token> workflow = new ArrayList<>();
         
-//        // TODO вынести в экспорт
-//        String pageName = Regex.get(getStep(), Templates.REGEX_INQUOTES);
-//        setStep("Экран " + pageName);
-
-//        workflow.add(TokenFactory.createToken("M"));
         workflow.addAll(this.wrap());
         
         States.focusedElement = "";
