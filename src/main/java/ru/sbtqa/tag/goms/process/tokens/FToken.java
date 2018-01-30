@@ -15,7 +15,7 @@ class FToken extends Token {
 
     @Override
     public List<Token> atomize() {
-        States.focusedElement = Regex.get(getStep(), Templates.REGEX_INQUOTES).replace("\"", "");
+        States.setFocusedElement(Regex.get(getStep(), Templates.REGEX_INQUOTES).replace("\"", ""));
         
         return new ArrayList<>();
     }

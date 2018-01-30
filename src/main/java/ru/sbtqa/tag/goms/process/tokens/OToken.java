@@ -17,7 +17,7 @@ class OToken extends Token {
         
         workflow.addAll(this.wrap());
         
-        States.focusedElement = "";
+        States.setFocusedElement(null);
         
         return workflow;
     }

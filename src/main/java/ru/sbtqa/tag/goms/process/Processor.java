@@ -34,7 +34,7 @@ public class Processor {
     }
     
     private static void setStatesToDefault() {
-        States.handContext = HandContext.ON_MOUSE;
-        States.focusedElement = "";
+        States.setHandContext(HandContext.ON_MOUSE);
+        States.setFocusedElement(null);
     }
 }

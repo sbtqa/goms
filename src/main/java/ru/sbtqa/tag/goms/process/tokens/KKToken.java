@@ -18,9 +18,9 @@ class KKToken extends Token {
     @Override
     public List<Token> atomize() {
         List<Token> workflow = new ArrayList<>();
-        if (!"".equals(States.focusedElement) && getStep().contains(States.focusedElement)) {
+        if (null != States.getFocusedElement() && getStep().contains(States.getFocusedElement())) {
             String elementFocusedDescription = Operators.INSTANCE.getOperator("F").getDescription();
-            String mentalPreparationWithFocusedElementDescription = String.format(elementFocusedDescription, States.focusedElement);
+            String mentalPreparationWithFocusedElementDescription = String.format(elementFocusedDescription, States.getFocusedElement());
             workflow.add(TokenFactory.createToken(mentalPreparationWithFocusedElementDescription, "M"));
         } else {
             workflow.add(TokenFactory.createToken("M"));
@@ -37,7 +37,7 @@ class KKToken extends Token {
         setMultiplier(Regex.get(getStep(), Templates.REGEX_INQUOTES, 2).replace("\"", "").length());
         
         workflow.addAll(this.wrap());
-        States.focusedElement = "";
+        States.setFocusedElement(null);
         
         return workflow;
     }

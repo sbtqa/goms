@@ -45,7 +45,7 @@ public abstract class Token {
             workflowPortion.add(TokenFactory.createToken("M"));
             workflowPortion.add(TokenFactory.createToken("H"));
             workflowPortion.add(TokenFactory.createToken("M"));
-            States.handContext = HandContext.SELF;
+            States.setHandContext(HandContext.SELF);
         }
 
         return workflowPortion;
@@ -54,9 +54,9 @@ public abstract class Token {
     protected List<Token> moveHandsOn(HandContext handContext) {
         List<Token> workflow = new ArrayList<>();
 
-        if (States.handContext != handContext) {
+        if (States.getHandContext() != handContext) {
             workflow.add(TokenFactory.createToken("H"));
-            States.handContext = handContext;
+            States.setHandContext(handContext);
             workflow.add(TokenFactory.createToken("M"));
         }
 
