@@ -1,11 +1,11 @@
 package ru.sbtqa.tag.goms.process.tokens;
 
-import ru.sbtqa.tag.goms.process.States;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
 import ru.sbtqa.tag.goms.contexts.HandContext;
 import ru.sbtqa.tag.goms.model.Operator;
+import ru.sbtqa.tag.goms.process.States;
 
 public abstract class Token {
 
@@ -29,19 +29,10 @@ public abstract class Token {
     protected List<Token> wrap() {
         List<Token> wrappedToken = new ArrayList<>();
 
-        wrappedToken.addAll(this.applyPrelims());
         wrappedToken.addAll(this.applySelfContext());
         wrappedToken.add(this);
 
         return wrappedToken;
-    }
-
-    /**
-     * Insert prelims tokens before this token
-     */
-    private List<Token> applyPrelims() {
-        // TODO взять из operator prelims и добавить их
-        return new ArrayList<>();
     }
 
     /**
