@@ -1,4 +1,4 @@
-package ru.sbtqa.tag.goms.objects;
+package ru.sbtqa.tag.goms.model;
 
 import java.util.List;
 
@@ -11,16 +11,8 @@ public class Model {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Operator> getOperator() {
+    public List<Operator> getOperators() {
         return operators;
-    }
-
-    public void setOperator(List<Operator> operator) {
-        this.operators = operator;
     }
 
     @Override

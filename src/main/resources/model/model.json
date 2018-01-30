@@ -1,0 +1,101 @@
+  {
+    "name":"klm",
+    "operators":[  
+      {  
+        "name":"click",
+        "symbol":"BB",
+        "description":"Клик мышкой",
+        "term":"(нажимает кнопку)",
+        "time":200
+      },
+      {  
+        "name":"checkbox",
+        "symbol":"C",
+        "description":"Клик мышкой",
+        "term":"(отмечает признак)",
+        "time":200
+      },
+      {  
+        "name":"select",
+        "symbol":"S",
+        "description":"Выбор из выпадающего списка",
+        "term":"(выбирает)",
+        "time":200
+      },
+      {  
+        "name":"select",
+        "symbol":"ST",
+        "description":"Выбор из выпадающего списка",
+        "term":"(выбирает без отклика системы)",
+        "time":200
+      },
+      {  
+        "name":"button",
+        "symbol":"K",
+        "description":"Нажатие клавиши",
+        "term":"(нажимает клавишу)",
+        "time":280
+      },
+      {  
+        "name":"handmove",
+        "symbol":"H",
+        "description":"Перемещение руки",
+        "time":400
+      },
+      {  
+        "name":"text",
+        "symbol":"KK",
+        "description":"Печать текста",
+        "term":"(заполняет поле)",
+        "time":280
+      },
+      {  
+        "name":"page",
+        "symbol":"O",
+        "description":"Открывается страница",
+        "term":"^.*?пользователь (?:находится на странице|открывается страница|открывается вкладка мастера) \"([^.*?\"]*)\"$",
+        "time":0
+      },
+      {  
+        "name":"mental",
+        "symbol":"M",
+        "description":"Ментальная подготовка",
+        "time":1200
+      },
+      {  
+        "name":"focus",
+        "symbol":"F",
+        "description":"Фокусирование на элементе \"%s\"",
+        "term":"^.*?в фокусе находится элемент \"([^.*?\"]*)\"$",
+        "time":0
+      },
+      {  
+        "name":"pointing",
+        "symbol":"P",
+        "description":"Указание мышкой",
+        "time":1100
+      },
+      {  
+        "name":"response",
+        "symbol":"T",
+        "description":"Ответ системы",
+        "time":100
+      },
+      {  
+        "name":"tablet-key",
+        "symbol":"TK",
+        "description":"Прикладывание ключ-таблетки",
+        "term":"(прикладывает таблетку)",
+        "time":280,
+        "selfContexted":true
+      },
+      {  
+        "name":"scan",
+        "symbol":"SC",
+        "description":"Сканирование штрихкода",
+        "term":"(сканирует штрихкод)",
+        "time":280,
+        "selfContexted":true
+      }
+    ]
+  }

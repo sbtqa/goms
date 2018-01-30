@@ -1,4 +1,4 @@
-package ru.sbtqa.tag.goms.objects.contexts;
+package ru.sbtqa.tag.goms.contexts;
 
 /**
  * User's hand position
