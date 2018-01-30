@@ -32,9 +32,7 @@ public class Reader {
     public static Model getModel(InputStream json) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            Model model = mapper.readValue(json, Model.class);
-            
-            return model;
+            return mapper.readValue(json, Model.class);
         } catch (IOException | NullPointerException ex) {
             Logger.getLogger(Reader.class.getName()).log(Level.SEVERE, "Error while reading model json", ex);
         }

@@ -48,25 +48,8 @@ public class Export {
     public static void writeIntoExcel(String filePath, Map<String, List<Token>> cache) {
         HSSFWorkbook book = new HSSFWorkbook();
         File file = new File(filePath);
-        if (file.exists()) {
-            FileInputStream excelFile;
-            try {
-                excelFile = new FileInputStream(file);
-                // remove all of sheets from existing file
-                try (Workbook existsBook = new HSSFWorkbook(excelFile)) {
-                    // remove all of sheets from existing file
-                    for (int i = existsBook.getNumberOfSheets() - 1; i >= 0; i--) {
-                        existsBook.removeSheetAt(i);
-                    }
-                    try (FileOutputStream output = new FileOutputStream(file)) {
-                        existsBook.write(output);
-                    }
-                }
-            } catch (IOException e) {
-                LOGGER.log(Level.WARNING, e.getMessage(), e);
-            }
-        }
-
+        clearExistingFile(file);
+        
         try {
             for (Map.Entry<String, List<Token>> scenario : cache.entrySet()) {
                 HSSFSheet sheet = book.createSheet(scenario.getKey());
@@ -195,6 +178,27 @@ public class Export {
             book.close();
         } catch (IOException e) {
             LOGGER.log(Level.WARNING, e.getMessage(), e);
+        }
+    }
+
+    private static void clearExistingFile(File file) {
+        if (file.exists()) {
+            FileInputStream excelFile;
+            try {
+                excelFile = new FileInputStream(file);
+                // remove all of sheets from existing file
+                try (Workbook existsBook = new HSSFWorkbook(excelFile)) {
+                    // remove all of sheets from existing file
+                    for (int i = existsBook.getNumberOfSheets() - 1; i >= 0; i--) {
+                        existsBook.removeSheetAt(i);
+                    }
+                    try (FileOutputStream output = new FileOutputStream(file)) {
+                        existsBook.write(output);
+                    }
+                }
+            } catch (IOException e) {
+                LOGGER.log(Level.WARNING, e.getMessage(), e);
+            }
         }
     }
 

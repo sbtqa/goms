@@ -20,7 +20,7 @@ public class Statistics {
         Map<String, Map<String, Float>> statistics = new LinkedHashMap<>();
 
         for (Map.Entry<String, List<Token>> scenario : feature.entrySet()) {
-            Float sum = new Float(0);
+            Float sum = Float.valueOf(0);
             Map<String, Float> screens = new LinkedHashMap<>();
             String currentScreen = UNDEFINED_SCREEN;
             int counter = 0;

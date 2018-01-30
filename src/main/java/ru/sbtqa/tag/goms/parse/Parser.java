@@ -43,7 +43,7 @@ public class Parser {
             }
 
             if (counter++ == featureRaw.size() - 1 || line.matches(String.format(REGEX_KEYWORDS, SCENARIO_KEYWORDS))) {
-                if (scenario.size() > 0) {
+                if (!scenario.isEmpty()) {
                     feature.put(scenarioName, new ArrayList<>(scenario));
                 }
                 scenario.clear();
