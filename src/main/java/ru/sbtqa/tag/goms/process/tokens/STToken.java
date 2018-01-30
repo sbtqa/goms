@@ -22,7 +22,6 @@ class STToken extends Token {
         workflow.add(TokenFactory.createToken("M"));
         workflow.add(TokenFactory.createToken("P"));
         workflow.addAll(this.wrap());
-        workflow.add(TokenFactory.createToken("T"));
         
         return workflow;
     }

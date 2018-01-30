@@ -1,6 +1,5 @@
 package ru.sbtqa.tag.goms.output;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,21 +8,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import ru.sbtqa.tag.goms.process.tokens.Token;
 import ru.sbtqa.tag.goms.utils.Regex;
 import ru.sbtqa.tag.goms.utils.Templates;
@@ -33,10 +29,8 @@ public class Export {
     private static final short DEFAULT_ROW_HEIGHT = 350;
     private static final int HEIGHT_COEFFICIENT = 20;
 
-    private static final XSSFColor GREY = new XSSFColor(new Color(235, 235, 235));
+    private static final Logger LOGGER = Logger.getLogger(Export.class.getName());
 
-    private static final Logger LOGGER = Logger.getLogger( Export.class.getName() );
-    
     private enum COLUMNS {
         A(0), B(1), C(2), D(3), E(4), F(5), G(6);
 
@@ -50,16 +44,16 @@ public class Export {
             return index;
         }
     }
-    
+
     public static void writeIntoExcel(String filePath, Map<String, List<Token>> cache) {
-        XSSFWorkbook book = new XSSFWorkbook();
+        HSSFWorkbook book = new HSSFWorkbook();
         File file = new File(filePath);
         if (file.exists()) {
             FileInputStream excelFile;
             try {
                 excelFile = new FileInputStream(file);
                 // remove all of sheets from existing file
-                try (Workbook existsBook = new XSSFWorkbook(excelFile)) {
+                try (Workbook existsBook = new HSSFWorkbook(excelFile)) {
                     // remove all of sheets from existing file
                     for (int i = existsBook.getNumberOfSheets() - 1; i >= 0; i--) {
                         existsBook.removeSheetAt(i);
@@ -75,7 +69,7 @@ public class Export {
 
         try {
             for (Map.Entry<String, List<Token>> scenario : cache.entrySet()) {
-                Sheet sheet = book.createSheet(scenario.getKey());
+                HSSFSheet sheet = book.createSheet(scenario.getKey());
                 sheet.setDisplayGridlines(false);
                 sheet.setDefaultRowHeight(DEFAULT_ROW_HEIGHT);
 
@@ -143,7 +137,7 @@ public class Export {
                         String pageName = Regex.get(token.getStep(), Templates.REGEX_INQUOTES);
                         token.setStep("Экран " + pageName);
                     }
-                    
+
                     description2.setCellValue(token.getStep());
 
                     boolean isPainted = false;
@@ -152,13 +146,13 @@ public class Export {
                     }
 
                     if (backgroundCount >= 0) {
-                        symbol.setCellStyle(getContentCellStyle(book, HorizontalAlignment.RIGHT, isPainted));
-                        time.setCellStyle(getContentCellStyle(book, HorizontalAlignment.RIGHT, isPainted));
-                        empty1.setCellStyle(getContentCellStyle(book, HorizontalAlignment.RIGHT, isPainted));
-                        empty2.setCellStyle(getContentCellStyle(book, HorizontalAlignment.RIGHT, isPainted));
-                        description1.setCellStyle(getContentCellStyle(book, HorizontalAlignment.LEFT, isPainted));
-                        multiplier.setCellStyle(getContentCellStyle(book, HorizontalAlignment.RIGHT, isPainted));
-                        description2.setCellStyle(getContentCellStyle(book, HorizontalAlignment.LEFT, isPainted));
+                        symbol.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
+                        time.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
+                        empty1.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
+                        empty2.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
+                        description1.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_LEFT, isPainted));
+                        multiplier.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
+                        description2.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_LEFT, isPainted));
                     }
 
                     backgroundCount++;
@@ -172,7 +166,7 @@ public class Export {
                 totalsNameSec.setCellValue("Итого (Сек.):");
                 totalsNameSec.setCellStyle(getHeaderCellStyle(book));
                 Cell totals = row.createCell(COLUMNS.B.getIndex());
-                totals.setCellType(CellType.FORMULA);
+                totals.setCellType(HSSFCell.CELL_TYPE_FORMULA);
                 String strFormula = "SUM(" + COLUMNS.B.toString() + "1:" + COLUMNS.B.toString() + rowCount + ")";
                 totals.setCellFormula(strFormula);
                 totals.setCellStyle(getScreenCellStyle(book));
@@ -185,7 +179,7 @@ public class Export {
                 totalsNameMin.setCellValue("Итого (Мин.):");
                 totalsNameMin.setCellStyle(getHeaderCellStyle(book));
                 Cell totalsMin = row.createCell(COLUMNS.B.getIndex());
-                totalsMin.setCellType(CellType.FORMULA);
+                totalsMin.setCellType(HSSFCell.CELL_TYPE_FORMULA);
                 strFormula = COLUMNS.B.toString() + rowCount + "/60";
                 totalsMin.setCellFormula(strFormula);
                 totalsMin.setCellStyle(getScreenCellStyle(book));
@@ -211,7 +205,7 @@ public class Export {
         font.setBold(false);
         font.setFontHeight((short) (16 * HEIGHT_COEFFICIENT));
 
-        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
         cellStyle.setFont(font);
 
         return cellStyle;
@@ -226,7 +220,7 @@ public class Export {
         font.setColor(IndexedColors.BROWN.getIndex());
 
         cellStyle.setFont(font);
-        cellStyle.setBorderBottom(BorderStyle.THIN);
+        cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         cellStyle.setWrapText(true);
 
         return cellStyle;
@@ -239,15 +233,15 @@ public class Export {
         font.setBold(true);
         font.setFontHeight((short) (11 * HEIGHT_COEFFICIENT));
 
-        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
         cellStyle.setFont(font);
-        cellStyle.setBorderBottom(BorderStyle.THIN);
+        cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
 
         return cellStyle;
     }
 
-    private static CellStyle getContentCellStyle(XSSFWorkbook book, HorizontalAlignment align, boolean isPainted) {
-        XSSFCellStyle cellStyle = book.createCellStyle();
+    private static CellStyle getContentCellStyle(HSSFWorkbook book, short align, boolean isPainted) {
+        CellStyle cellStyle = book.createCellStyle();
 
         Font font = book.createFont();
         font.setFontHeight((short) (11 * HEIGHT_COEFFICIENT));
@@ -256,8 +250,8 @@ public class Export {
         cellStyle.setAlignment(align);
 
         if (isPainted) {
-            cellStyle.setFillForegroundColor(GREY);
-            cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            cellStyle.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+            cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
         }
         return cellStyle;
     }

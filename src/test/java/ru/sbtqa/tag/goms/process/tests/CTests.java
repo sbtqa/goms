@@ -1,4 +1,4 @@
-package ru.sbtqa.tag.goms.processing.tests;
+package ru.sbtqa.tag.goms.process.tests;
 
 import java.util.ArrayList;
 import java.util.List;

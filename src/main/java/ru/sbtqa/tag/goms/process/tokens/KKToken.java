@@ -18,7 +18,6 @@ class KKToken extends Token {
     @Override
     public List<Token> atomize() {
         List<Token> workflow = new ArrayList<>();
-        System.out.println("!!! = " + States.focusedElement);
         if (!"".equals(States.focusedElement) && getStep().contains(States.focusedElement)) {
             String elementFocusedDescription = Operators.INSTANCE.getOperator("F").getDescription();
             String mentalPreparationWithFocusedElementDescription = String.format(elementFocusedDescription, States.focusedElement);

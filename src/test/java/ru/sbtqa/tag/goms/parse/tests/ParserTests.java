@@ -1,4 +1,4 @@
-package ru.sbtqa.tag.goms.parsing.tests;
+package ru.sbtqa.tag.goms.parse.tests;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
