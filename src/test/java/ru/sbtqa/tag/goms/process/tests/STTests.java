@@ -13,7 +13,7 @@ public class STTests {
     @Test
     public void SelectTest() {
         // A1
-        String step = "* пользователь (выбирает без отклика системы) \"Поиск по каталогу\" \"Представители\"";
+        String step = "* пользователь выбирает без отклика системы \"Поиск по каталогу\" \"Представители\"";
         List<Token> feature = new ArrayList<>(); 
         feature.add(TokenFactory.createToken(step, "ST")); 
         

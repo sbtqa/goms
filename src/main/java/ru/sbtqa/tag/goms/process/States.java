@@ -22,4 +22,9 @@ public class States {
     public static void setFocusedElement(String aFocusedElement) {
         focusedElement = aFocusedElement;
     }
+
+    public static void setStatesToDefault() {
+        States.setHandContext(HandContext.ON_MOUSE);
+        States.setFocusedElement(null);
+    }
 }

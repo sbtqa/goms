@@ -13,7 +13,7 @@ public class KKTests {
     @Test
     public void fillFieldTest() {
         // A1
-        String step = "* пользователь (заполняет поле) \"Серия и номер\" \"4593494790\"";
+        String step = "* пользователь заполняет поле \"Серия и номер\" \"4593494790\"";
         List<Token> feature = new ArrayList<>();
         feature.add(TokenFactory.createToken(step, "KK"));
 
@@ -36,7 +36,7 @@ public class KKTests {
     @Test
     public void fillFieldWithoutTextTest() {
         // A1
-        String step = "* пользователь (заполняет поле) \"Серия и номер\"";
+        String step = "* пользователь заполняет поле \"Серия и номер\"";
         List<Token> feature = new ArrayList<>();
         feature.add(TokenFactory.createToken(step, "KK"));
 
@@ -59,7 +59,7 @@ public class KKTests {
     @Test
     public void fillFieldWithNonWordCharactersTest() {
         // A1
-        String step = "* пользователь (заполняет поле) \"Серия и номер\" \"<>?:{}_+|\"";
+        String step = "* пользователь заполняет поле \"Серия и номер\" \"<>?:{}_+|\"";
         List<Token> feature = new ArrayList<>(); 
         feature.add(TokenFactory.createToken(step, "KK")); 
         

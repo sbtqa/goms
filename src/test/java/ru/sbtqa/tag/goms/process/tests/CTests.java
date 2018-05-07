@@ -13,7 +13,7 @@ public class CTests {
     @Test
     public void SetCheckBoxTest() {
         // A1
-        String step = "* пользователь (отмечает признак) \"Запомнить пароль\"";
+        String step = "* пользователь отмечает признак \"Запомнить пароль\"";
         List<Token> feature = new ArrayList<>(); 
         feature.add(TokenFactory.createToken(step, "C")); 
         
