@@ -13,7 +13,7 @@ public class BBTests {
     @Test
     public void ClickTest() {
         // A1
-        String step = "* пользователь (нажимает кнопку) \"Далее\"";
+        String step = "* пользователь нажимает кнопку \"Далее\"";
         List<Token> feature = new ArrayList<>(); 
         feature.add(TokenFactory.createToken(step, "BB")); 
         

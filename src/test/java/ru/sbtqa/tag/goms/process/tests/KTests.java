@@ -13,7 +13,7 @@ public class KTests {
     @Test
     public void pressKeyTest() {
         // A1
-        String step = "* пользователь (нажимает клавишу) \"Enter\"";
+        String step = "* пользователь нажимает клавишу \"Enter\"";
         List<Token> feature = new ArrayList<>(); 
         feature.add(TokenFactory.createToken(step, "K")); 
         
@@ -34,7 +34,7 @@ public class KTests {
     @Test
     public void pressKeyWithHandOnKeyboardTest() {
        // A1
-        String step = "* пользователь (нажимает клавишу) \"Enter\"";
+        String step = "* пользователь нажимает клавишу \"Enter\"";
         List<Token> feature = new ArrayList<>(); 
         feature.add(TokenFactory.createToken(step, "K")); 
         feature.add(TokenFactory.createToken(step, "K")); 
@@ -59,7 +59,7 @@ public class KTests {
     @Test
     public void pressTabKeyTest() {
         // A1
-        String step = "* пользователь (нажимает клавишу) \"TAB\"";
+        String step = "* пользователь нажимает клавишу \"TAB\"";
         List<Token> feature = new ArrayList<>(); 
         feature.add(TokenFactory.createToken(step, "K")); 
         

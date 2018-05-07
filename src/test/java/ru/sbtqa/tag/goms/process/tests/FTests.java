@@ -12,7 +12,7 @@ public class FTests {
 
     @Test
     public void fillUnfocusedAndFocusedFieldsTest() {
-        String step = "* пользователь (заполняет поле) \"Серия и номер\" \"4593494790\"";
+        String step = "* пользователь заполняет поле \"Серия и номер\" \"4593494790\"";
         List<Token> feature = new ArrayList<>();
         feature.add(TokenFactory.createToken(step, "KK"));
         feature.add(TokenFactory.createToken("* в фокусе находится элемент \"Серия и номер\"", "F"));

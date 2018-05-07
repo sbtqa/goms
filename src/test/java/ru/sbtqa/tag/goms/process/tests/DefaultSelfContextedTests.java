@@ -13,7 +13,7 @@ public class DefaultSelfContextedTests {
     @Test
     public void TabletKeyTest() {
         // A1
-        String step = "* пользователь (прикладывает таблетку)";
+        String step = "* пользователь прикладывает таблетку";
         List<Token> feature = new ArrayList<>(); 
         feature.add(TokenFactory.createToken(step, "TK")); 
         
@@ -33,7 +33,7 @@ public class DefaultSelfContextedTests {
     @Test
     public void ScanTest() {
         // A1
-        String step = "* пользователь (сканирует штрихкод)";
+        String step = "* пользователь сканирует штрихкод";
         List<Token> feature = new ArrayList<>(); 
         feature.add(TokenFactory.createToken(step, "SC")); 
         
