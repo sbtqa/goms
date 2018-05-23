@@ -8,6 +8,8 @@ public class Operator {
     private int time;
     private String symbol;
     private String description;
+    private String interpretation;
+    private String example;
     private String term;
     private boolean selfContexted;
     
@@ -43,6 +45,22 @@ public class Operator {
         this.description = description;
     }
 
+    public String getInterpretation() {
+        return interpretation;
+    }
+
+    public void setInterpretation(String interpretation) {
+        this.interpretation = interpretation;
+    }
+
+    public String getExample() {
+        return example;
+    }
+
+    public void setExample(String example) {
+        this.example = example;
+    }
+
     public String getTerm() {
         return term;
     }
@@ -61,7 +79,7 @@ public class Operator {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name, time, symbol, description, term);
+        return Objects.hashCode(name, time, symbol, description, interpretation, example, term);
     }
 
     @Override
@@ -72,6 +90,8 @@ public class Operator {
                     && time == other.time
                     && Objects.equal(symbol, other.symbol)
                     && Objects.equal(description, other.description)
+                    && Objects.equal(interpretation, other.interpretation)
+                    && Objects.equal(example, other.example)
                     && Objects.equal(term, other.term);
         } else {
             return false;
@@ -83,7 +103,9 @@ public class Operator {
         return "Operator[symbol = " + symbol 
                 + ", name = " + name 
                 + ", time = " + time 
-                + ", description = " + description 
+                + ", description = " + description
+                + ", interpretation = " + interpretation
+                + ", example = " + example
                 + ", term = " + term + "]";
     }
 }
