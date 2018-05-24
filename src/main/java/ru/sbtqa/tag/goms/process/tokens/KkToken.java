@@ -9,9 +9,9 @@ import ru.sbtqa.tag.goms.process.States;
 import ru.sbtqa.tag.goms.utils.Regex;
 import ru.sbtqa.tag.goms.utils.Templates;
 
-class KKToken extends Token {
+class KkToken extends Token {
 
-    public KKToken(String step, int multiplier, Operator operator) {
+    public KkToken(String step, int multiplier, Operator operator) {
         super(step, multiplier, operator);
     }
 

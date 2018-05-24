@@ -8,24 +8,26 @@ import ru.sbtqa.tag.goms.process.Processor;
 import ru.sbtqa.tag.goms.process.tokens.Token;
 import ru.sbtqa.tag.goms.process.tokens.TokenFactory;
 
-public class BBTests {
+public class StTests {
 
     @Test
-    public void ClickTest() {
+    public void SelectTest() {
         // A1
-        String step = "* пользователь нажимает кнопку \"Далее\"";
+        String step = "* пользователь выбирает без отклика системы \"Поиск по каталогу\" \"Представители\"";
         List<Token> feature = new ArrayList<>(); 
-        feature.add(TokenFactory.createToken(step, "BB")); 
+        feature.add(TokenFactory.createToken(step, "ST")); 
         
         List<Token> expectedWorkflow = new ArrayList<>(); 
         expectedWorkflow.add(TokenFactory.createToken("M"));
         expectedWorkflow.add(TokenFactory.createToken("P"));
-        expectedWorkflow.add(TokenFactory.createToken(step, "BB"));
-        expectedWorkflow.add(TokenFactory.createToken("T"));
+        expectedWorkflow.add(TokenFactory.createToken("BB"));
+        expectedWorkflow.add(TokenFactory.createToken("M"));
+        expectedWorkflow.add(TokenFactory.createToken("P"));
+        expectedWorkflow.add(TokenFactory.createToken(step, "ST"));
         
         // A2
         List<Token> actualWorkflow = Processor.process(feature);
-        
+
         // A3
         Assert.assertEquals(expectedWorkflow, actualWorkflow);
     }

@@ -8,7 +8,7 @@ import ru.sbtqa.tag.goms.process.Processor;
 import ru.sbtqa.tag.goms.process.tokens.Token;
 import ru.sbtqa.tag.goms.process.tokens.TokenFactory;
 
-public class KKTests {
+public class KkTests {
 
     @Test
     public void fillFieldTest() {
