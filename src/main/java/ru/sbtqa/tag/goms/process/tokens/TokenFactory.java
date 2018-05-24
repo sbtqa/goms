@@ -36,6 +36,8 @@ public class TokenFactory {
                 return new FToken(step, multiplier, Operators.INSTANCE.getOperator(symbol));
             case "SCR":
                 return new ScrToken(step, multiplier, Operators.INSTANCE.getOperator(symbol));
+            case "DND":
+                return new DndToken(step, multiplier, Operators.INSTANCE.getOperator(symbol));
             default:
                 return new DefaultToken(step, multiplier, Operators.INSTANCE.getOperator(symbol));
         }

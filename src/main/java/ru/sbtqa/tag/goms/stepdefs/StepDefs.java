@@ -44,7 +44,7 @@ public class StepDefs {
     public void elementIsInFocus(String element) {
     }
 
-    @Допустим("^пользователь скроллит экран$")
+    @Допустим("^пользователь скролит экран$")
     public void userScroll() {
     }
 }

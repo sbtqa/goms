@@ -5,9 +5,9 @@ import java.util.List;
 import ru.sbtqa.tag.goms.contexts.HandContext;
 import ru.sbtqa.tag.goms.model.Operator;
 
-class ScrToken extends Token {
+class DndToken extends Token {
 
-    public ScrToken(String step, int multiplier, Operator operator) {
+    public DndToken(String step, int multiplier, Operator operator) {
         super(step, multiplier, operator);
     }
 
@@ -17,9 +17,11 @@ class ScrToken extends Token {
         
         workflow.add(TokenFactory.createToken("M"));
         workflow.addAll(moveHandsOn(HandContext.ON_MOUSE));
-        workflow.addAll(this.wrap());
-        workflow.add(TokenFactory.createToken("T"));
-        
+        workflow.add(TokenFactory.createToken("P"));
+        workflow.add(TokenFactory.createToken("B"));
+        workflow.add(TokenFactory.createToken(this.getStep(),"P"));
+        workflow.add(TokenFactory.createToken("B"));
+
         return workflow;
     }
 }

@@ -8,20 +8,22 @@ import ru.sbtqa.tag.goms.process.Processor;
 import ru.sbtqa.tag.goms.process.tokens.Token;
 import ru.sbtqa.tag.goms.process.tokens.TokenFactory;
 
-public class ScrTests {
+public class DndTests {
 
     @Test
     public void ClickTest() {
         // A1
-        String step = "* пользователь скролит экран";
+        String step = "* пользователь перетаскивает элемент \"XLS-документ\"";
         List<Token> feature = new ArrayList<>(); 
-        feature.add(TokenFactory.createToken(step, "SCR"));
+        feature.add(TokenFactory.createToken(step, "DND"));
         
         List<Token> expectedWorkflow = new ArrayList<>(); 
         expectedWorkflow.add(TokenFactory.createToken("M"));
-        expectedWorkflow.add(TokenFactory.createToken(step, "SCR"));
-        expectedWorkflow.add(TokenFactory.createToken("T"));
-        
+        expectedWorkflow.add(TokenFactory.createToken("P"));
+        expectedWorkflow.add(TokenFactory.createToken("B"));
+        expectedWorkflow.add(TokenFactory.createToken(step, "P"));
+        expectedWorkflow.add(TokenFactory.createToken("B"));
+
         // A2
         List<Token> actualWorkflow = Processor.process(feature);
         
