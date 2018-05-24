@@ -43,4 +43,8 @@ public class StepDefs {
     @Допустим("^в фокусе находится элемент \"([^\"]*)\"$")
     public void elementIsInFocus(String element) {
     }
+
+    @Допустим("^пользователь скролит экран$")
+    public void userScroll() {
+    }
 }
