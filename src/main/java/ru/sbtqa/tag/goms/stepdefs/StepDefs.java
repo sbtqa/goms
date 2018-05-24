@@ -47,4 +47,8 @@ public class StepDefs {
     @Допустим("^пользователь скролит экран$")
     public void userScroll() {
     }
+
+    @Допустим("^пользователь перетаскивает элемент \"([^\"]*)\"$")
+    public void userDragNDrop(String element) {
+    }
 }
