@@ -2,11 +2,11 @@ package ru.sbtqa.tag.goms.output;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -29,8 +29,6 @@ public class Export {
     private static final short DEFAULT_ROW_HEIGHT = 350;
     private static final int HEIGHT_COEFFICIENT = 20;
 
-    private static final Logger LOGGER = Logger.getLogger(Export.class.getName());
-
     private enum COLUMNS {
         A(0), B(1), C(2), D(3), E(4), F(5), G(6);
 
@@ -45,159 +43,151 @@ public class Export {
         }
     }
 
-    public static void writeIntoExcel(String filePath, Map<String, List<Token>> cache) {
+    public static void writeIntoExcel(String filePath, Map<String, List<Token>> cache) throws IOException {
         HSSFWorkbook book = new HSSFWorkbook();
         File file = new File(filePath);
         clearExistingFile(file);
-        
-        try {
-            for (Map.Entry<String, List<Token>> scenario : cache.entrySet()) {
-                HSSFSheet sheet = book.createSheet(scenario.getKey());
-                sheet.setDisplayGridlines(false);
-                sheet.setDefaultRowHeight(DEFAULT_ROW_HEIGHT);
 
-                Row row;
-                int rowCount = 0;
-                int backgroundCount = 0;
+        for (Map.Entry<String, List<Token>> scenario : cache.entrySet()) {
+            HSSFSheet sheet = book.createSheet(scenario.getKey());
+            sheet.setDisplayGridlines(false);
+            sheet.setDefaultRowHeight(DEFAULT_ROW_HEIGHT);
 
-                // MAIN HEADER
+            Row row;
+            int rowCount = 0;
+            int backgroundCount = 0;
+
+            // MAIN HEADER
+            row = sheet.createRow(rowCount);
+            Cell mainHeader = row.createCell(COLUMNS.A.getIndex());
+            sheet.addMergedRegion(
+                    new CellRangeAddress(rowCount, rowCount, COLUMNS.A.getIndex(), COLUMNS.G.getIndex()));
+            mainHeader.setCellValue(scenario.getKey());
+            mainHeader.setCellStyle(getMainHeaderCellStyle(book));
+            row.setHeight((short) (DEFAULT_ROW_HEIGHT * 1.5));
+
+            rowCount++;
+
+            // HEADERS TITLE
+            row = sheet.createRow(rowCount);
+            createHeaderCell(book, row, COLUMNS.A, "Тип");
+            createHeaderCell(book, row, COLUMNS.B, "Время");
+            createHeaderCell(book, row, COLUMNS.C, "");
+            createHeaderCell(book, row, COLUMNS.D, "");
+            createHeaderCell(book, row, COLUMNS.E, "Описание");
+            createHeaderCell(book, row, COLUMNS.F, "Количество действий");
+            createHeaderCell(book, row, COLUMNS.G, "Комментарий");
+            row.setHeight((short) (DEFAULT_ROW_HEIGHT * 2));
+
+            rowCount++;
+
+            // CONTENT
+            for (Token token : scenario.getValue()) {
                 row = sheet.createRow(rowCount);
-                Cell mainHeader = row.createCell(COLUMNS.A.getIndex());
-                sheet.addMergedRegion(
-                        new CellRangeAddress(rowCount, rowCount, COLUMNS.A.getIndex(), COLUMNS.G.getIndex()));
-                mainHeader.setCellValue(scenario.getKey());
-                mainHeader.setCellStyle(getMainHeaderCellStyle(book));
-                row.setHeight((short) (DEFAULT_ROW_HEIGHT * 1.5));
 
-                rowCount++;
+                // add Symbol
+                Cell symbol = row.createCell(COLUMNS.A.getIndex());
+                symbol.setCellValue(token.getOperator().getSymbol().toLowerCase());
 
-                // HEADERS TITLE
-                row = sheet.createRow(rowCount);
-                createHeaderCell(book, row, COLUMNS.A, "Тип");
-                createHeaderCell(book, row, COLUMNS.B, "Время");
-                createHeaderCell(book, row, COLUMNS.C, "");
-                createHeaderCell(book, row, COLUMNS.D, "");
-                createHeaderCell(book, row, COLUMNS.E, "Описание");
-                createHeaderCell(book, row, COLUMNS.F, "Количество действий");
-                createHeaderCell(book, row, COLUMNS.G, "Комментарий");
-                row.setHeight((short) (DEFAULT_ROW_HEIGHT * 2));
+                // add Time
+                Cell time = row.createCell(COLUMNS.B.getIndex());
+                time.setCellValue((float) token.getOperator().getTime() / 1000 * token.getMultiplier());
 
-                rowCount++;
+                // add Empties
+                Cell empty1 = row.createCell(COLUMNS.C.getIndex());
+                Cell empty2 = row.createCell(COLUMNS.D.getIndex());
 
-                // CONTENT
-                for (Token token : scenario.getValue()) {
-                    row = sheet.createRow(rowCount);
+                // add Operator Name as Discription
+                Cell description1 = row.createCell(COLUMNS.E.getIndex());
+                description1.setCellValue(token.getOperator().getDescription());
 
-                    // add Symbol
-                    Cell symbol = row.createCell(COLUMNS.A.getIndex());
-                    symbol.setCellValue(token.getOperator().getSymbol().toLowerCase());
+                // add Multiplier
+                Cell multiplier = row.createCell(COLUMNS.F.getIndex());
+                multiplier.setCellValue(token.getMultiplier());
 
-                    // add Time
-                    Cell time = row.createCell(COLUMNS.B.getIndex());
-                    time.setCellValue((float) token.getOperator().getTime() / 1000 * token.getMultiplier());
-
-                    // add Empties
-                    Cell empty1 = row.createCell(COLUMNS.C.getIndex());
-                    Cell empty2 = row.createCell(COLUMNS.D.getIndex());
-
-                    // add Operator Name as Discription
-                    Cell description1 = row.createCell(COLUMNS.E.getIndex());
-                    description1.setCellValue(token.getOperator().getDescription());
-
-                    // add Multiplier
-                    Cell multiplier = row.createCell(COLUMNS.F.getIndex());
-                    multiplier.setCellValue(token.getMultiplier());
-
-                    // add step name as Description
-                    Cell description2 = row.createCell(COLUMNS.G.getIndex());
-                    // merge cell if it is open page
-                    if ("O".equals(token.getOperator().getSymbol())) {
-                        sheet.addMergedRegion(
-                                new CellRangeAddress(rowCount, rowCount, COLUMNS.A.getIndex(), COLUMNS.G.getIndex()));
-                        description2 = row.getCell(COLUMNS.A.getIndex());
-                        description2.setCellStyle(getScreenCellStyle(book));
-                        backgroundCount = -1;
-                        String pageName = Regex.get(token.getStep(), Templates.REGEX_INQUOTES);
-                        token.setStep("Экран " + pageName);
-                    }
-
-                    description2.setCellValue(token.getStep());
-
-                    boolean isPainted = false;
-                    if ((backgroundCount & 1) == 0) {
-                        isPainted = true;
-                    }
-
-                    if (backgroundCount >= 0) {
-                        symbol.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
-                        time.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
-                        empty1.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
-                        empty2.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
-                        description1.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_LEFT, isPainted));
-                        multiplier.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
-                        description2.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_LEFT, isPainted));
-                    }
-
-                    backgroundCount++;
-                    rowCount++;
+                // add step name as Description
+                Cell description2 = row.createCell(COLUMNS.G.getIndex());
+                // merge cell if it is open page
+                if ("O".equals(token.getOperator().getSymbol())) {
+                    sheet.addMergedRegion(
+                            new CellRangeAddress(rowCount, rowCount, COLUMNS.A.getIndex(), COLUMNS.G.getIndex()));
+                    description2 = row.getCell(COLUMNS.A.getIndex());
+                    description2.setCellStyle(getScreenCellStyle(book));
+                    backgroundCount = -1;
+                    String pageName = Regex.get(token.getStep(), Templates.REGEX_INQUOTES);
+                    token.setStep("Экран " + pageName);
                 }
 
-                // add Total scenario sum sec
-                row = sheet.createRow(rowCount);
-                row.setHeight((short) (DEFAULT_ROW_HEIGHT * 2));
-                Cell totalsNameSec = row.createCell(COLUMNS.A.getIndex());
-                totalsNameSec.setCellValue("Итого (Сек.):");
-                totalsNameSec.setCellStyle(getHeaderCellStyle(book));
-                Cell totals = row.createCell(COLUMNS.B.getIndex());
-                totals.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-                String strFormula = "SUM(" + COLUMNS.B.toString() + "1:" + COLUMNS.B.toString() + rowCount + ")";
-                totals.setCellFormula(strFormula);
-                totals.setCellStyle(getScreenCellStyle(book));
+                description2.setCellValue(token.getStep());
+
+                boolean isPainted = false;
+                if ((backgroundCount & 1) == 0) {
+                    isPainted = true;
+                }
+
+                if (backgroundCount >= 0) {
+                    symbol.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
+                    time.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
+                    empty1.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
+                    empty2.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
+                    description1.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_LEFT, isPainted));
+                    multiplier.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_RIGHT, isPainted));
+                    description2.setCellStyle(getContentCellStyle(book, CellStyle.ALIGN_LEFT, isPainted));
+                }
+
+                backgroundCount++;
                 rowCount++;
-
-                // add Total scenario sum min
-                row = sheet.createRow(rowCount);
-                row.setHeight((short) (DEFAULT_ROW_HEIGHT * 2));
-                Cell totalsNameMin = row.createCell(COLUMNS.A.getIndex());
-                totalsNameMin.setCellValue("Итого (Мин.):");
-                totalsNameMin.setCellStyle(getHeaderCellStyle(book));
-                Cell totalsMin = row.createCell(COLUMNS.B.getIndex());
-                totalsMin.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-                strFormula = COLUMNS.B.toString() + rowCount + "/60";
-                totalsMin.setCellFormula(strFormula);
-                totalsMin.setCellStyle(getScreenCellStyle(book));
-
-                sheet.autoSizeColumn(COLUMNS.A.getIndex());
-                sheet.autoSizeColumn(COLUMNS.E.getIndex());
-                sheet.autoSizeColumn(COLUMNS.F.getIndex());
-                sheet.autoSizeColumn(COLUMNS.G.getIndex());
-
             }
 
-            book.write(new FileOutputStream(file));
-            book.close();
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, e.getMessage(), e);
+            // add Total scenario sum sec
+            row = sheet.createRow(rowCount);
+            row.setHeight((short) (DEFAULT_ROW_HEIGHT * 2));
+            Cell totalsNameSec = row.createCell(COLUMNS.A.getIndex());
+            totalsNameSec.setCellValue("Итого (Сек.):");
+            totalsNameSec.setCellStyle(getHeaderCellStyle(book));
+            Cell totals = row.createCell(COLUMNS.B.getIndex());
+            totals.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+            String strFormula = "SUM(" + COLUMNS.B.toString() + "1:" + COLUMNS.B.toString() + rowCount + ")";
+            totals.setCellFormula(strFormula);
+            totals.setCellStyle(getScreenCellStyle(book));
+            rowCount++;
+
+            // add Total scenario sum min
+            row = sheet.createRow(rowCount);
+            row.setHeight((short) (DEFAULT_ROW_HEIGHT * 2));
+            Cell totalsNameMin = row.createCell(COLUMNS.A.getIndex());
+            totalsNameMin.setCellValue("Итого (Мин.):");
+            totalsNameMin.setCellStyle(getHeaderCellStyle(book));
+            Cell totalsMin = row.createCell(COLUMNS.B.getIndex());
+            totalsMin.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+            strFormula = COLUMNS.B.toString() + rowCount + "/60";
+            totalsMin.setCellFormula(strFormula);
+            totalsMin.setCellStyle(getScreenCellStyle(book));
+
+            sheet.autoSizeColumn(COLUMNS.A.getIndex());
+            sheet.autoSizeColumn(COLUMNS.E.getIndex());
+            sheet.autoSizeColumn(COLUMNS.F.getIndex());
+            sheet.autoSizeColumn(COLUMNS.G.getIndex());
+
         }
+
+        book.write(new FileOutputStream(file));
+        book.close();
     }
 
-    private static void clearExistingFile(File file) {
+    private static void clearExistingFile(File file) throws IOException {
         if (file.exists()) {
             FileInputStream excelFile;
-            try {
-                excelFile = new FileInputStream(file);
+            excelFile = new FileInputStream(file);
+            // remove all of sheets from existing file
+            try (Workbook existsBook = new HSSFWorkbook(excelFile)) {
                 // remove all of sheets from existing file
-                try (Workbook existsBook = new HSSFWorkbook(excelFile)) {
-                    // remove all of sheets from existing file
-                    for (int i = existsBook.getNumberOfSheets() - 1; i >= 0; i--) {
-                        existsBook.removeSheetAt(i);
-                    }
-                    try (FileOutputStream output = new FileOutputStream(file)) {
-                        existsBook.write(output);
-                    }
+                for (int i = existsBook.getNumberOfSheets() - 1; i >= 0; i--) {
+                    existsBook.removeSheetAt(i);
                 }
-            } catch (IOException e) {
-                LOGGER.log(Level.WARNING, e.getMessage(), e);
+                try (FileOutputStream output = new FileOutputStream(file)) {
+                    existsBook.write(output);
+                }
             }
         }
     }
