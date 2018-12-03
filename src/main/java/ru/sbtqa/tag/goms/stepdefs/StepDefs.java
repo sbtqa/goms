@@ -20,15 +20,15 @@ public class StepDefs {
     public void userFillField(String element, String text) {
     }
 
-    @Допустим("^пользователь отмечает признак \"([^\"]*)\"$")
+    @Допустим("^пользователь отмечает чекбокс \"([^\"]*)\"$")
     public void userCheck(String element) {
     }
 
-    @Допустим("^пользователь выбирает \"([^\"]*)\" \"([^\"]*)\"$")
+    @Допустим("^пользователь выбирает в \"([^\"]*)\" значение \"([^\"]*)\"$")
     public void userSelect(String element, String option) {
     }
 
-    @Допустим("^пользователь выбирает без отклика системы \"([^\"]*)\" \"([^\"]*)\"$")
+    @Допустим("^пользователь выбирает в \"([^\"]*)\" значение \"([^\"]*)\" без отклика системы$")
     public void userSelectWithoutWait(String element, String option) {
     }
 
